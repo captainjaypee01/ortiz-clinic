@@ -12,6 +12,17 @@
                     @lang('menus.backend.sidebar.dashboard')
                 </a>
             </li>
+            <li class="nav-title">
+                Record
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{
+                    active_class(Active::checkUriPattern('admin/record/branch'))
+                }}" href="{{ route('admin.record.branch.index') }}">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    Branch Management
+                </a>
+            </li>
 
             <li class="nav-title">
                 @lang('menus.backend.sidebar.system')
