@@ -7,7 +7,9 @@ namespace App\Models\Record\Traits\Attribute;
  */
 trait ServiceAttribute
 {
-    
+    public function getFormatPriceAttribute(){
+        return "P" . number_format($this->price, 2,".",",");
+    }
     /**
      * @return string
      */

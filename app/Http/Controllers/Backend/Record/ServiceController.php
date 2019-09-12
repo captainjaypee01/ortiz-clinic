@@ -97,6 +97,9 @@ class ServiceController extends Controller
         if(isset($form['price']))
             $service->price = $form["price"];
 
+        if(isset($form['unit']))
+            $service->unit = $form["unit"];
+
         if(request()->has('upload_file')){
              // Upload the file and put it to 'uploads' folder
              $file = request()->file('upload_file');
