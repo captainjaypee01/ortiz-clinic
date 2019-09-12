@@ -3,12 +3,12 @@
         <table class="table table-hover"> 
             <tr>
                 <th>Name</th>
-                <td>{{ $service->name }}</td>
+                <td>{{ $product->name }}</td>
             </tr>
 
             <tr>
                 <th>Price</th>
-                <td>{{ $service->price }}</td>
+                <td>{{ $product->price }}</td>
             </tr>
 
             <tr>
@@ -18,14 +18,14 @@
             
             <tr>
                 <th>Description</th>
-                <td>{{ $service->description }}</td>
+                <td>{{ $product->description }}</td>
             </tr> 
 
             <tr>
                 <th>Last Updated At</th>
                 <td>
-                    @if($service->updated_at)
-                        {{ timezone()->convertToLocal($service->updated_at) }}
+                    @if($product->updated_at)
+                        {{ timezone()->convertToLocal($product->updated_at) }}
                     @else
                         N/A
                     @endif

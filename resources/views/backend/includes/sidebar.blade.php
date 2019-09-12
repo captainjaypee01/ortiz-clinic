@@ -32,6 +32,18 @@
                     Service Management
                 </a>
             </li>
+            <li class="nav-title">
+                Production
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{
+                    active_class(Active::checkUriPattern('admin/production/product'))
+                }}" href="{{ route('admin.production.product.index') }}">
+                    <i class="nav-icon fas fa-capsules"></i>
+                    Product Management
+                </a>
+            </li>
 
 
             <li class="nav-title">

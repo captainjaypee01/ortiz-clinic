@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Models\Record;
+namespace App\Models\Production;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Record\Traits\Attribute\ServiceAttribute;
-use App\Models\Record\Traits\Relationship\ServiceRelationship;
+use App\Models\Production\Traits\Attribute\ProductAttribute;
+use App\Models\Production\Traits\Relationship\ProductRelationship;
 
-class Service extends Model
+class Product extends Model
 {
     use SoftDeletes,
-        ServiceAttribute,
-        ServiceRelationship;
+        ProductAttribute,
+        ProductRelationship;
 
     /**
     * The attributes that are mass assignable.

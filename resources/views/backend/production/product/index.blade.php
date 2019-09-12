@@ -8,12 +8,12 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Service Management <small class="text-muted">Active Services</small>
+                    Product Management <small class="text-muted">Active Products</small>
                 </h4>
             </div><!--col-->
 
             <div class="col-sm-7">
-                @include('backend.record.service.includes.header-buttons')
+                @include('backend.production.product.includes.header-buttons')
             </div><!--col-->
         </div><!--row-->
 
@@ -29,41 +29,36 @@
 
         </div><!--row-->
 
-        @if(count($services) > 0)
+        @if(count($products) > 0)
         <div class="row mt-4">
             <div class="col">
                 <div class="table-responsive">
-                    <table id="service-table" class="table">
+                    <table id="product-table" class="table">
                         <thead>
                         <tr>
                             <th>No.</th>
                             <th>Name</th>
                             <th>Price</th> 
                             <th>Unit</th>
-                            <th>Available Branches</th>
+                            <th>Categories</th>
                             <th>Status</th>
                             <th>Date Created</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($services as $index => $service)
-                            <?php $index = ($service->page - 1) * $service->per_page + 1; ?>
+                        @foreach($products as $index => $product) 
                             <tr>
-                                <td>{{  ($services->perPage() * $services->currentPage() - $services->perPage()) + ($loop->iteration) }}</td>
-                                <td>{{ $service->name }}</td>
-                                <td>{{ $service->format_price }}</td>
-                                <td>{{ $service->unit ? $service->unit : 'N/A' }}</td>
+                                <td>{{  ($products->perPage() * $products->currentPage() - $products->perPage()) + ($loop->iteration) }}</td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->format_price }}</td>
+                                <td>{{ $product->unit ? $product->unit : 'N/A' }}</td>
                                 <td>
-                                    @if(count($service->branches) > 0)
-                                        @foreach($service->branches as $branch)
-                                        <p>{{ $branch->name }}</p>
-                                        @endforeach
-                                    @endif
+                                
                                 </td>
-                                <td>{!! $service->status_label !!}</td>
-                                <td>{{ $service->created_at }}</td>
-                                <td>{!! $service->action_buttons !!}</td>
+                                <td>{!! $product->status_label !!}</td>
+                                <td>{{ $product->created_at }}</td>
+                                <td>{!! $product->action_buttons !!}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -74,13 +69,13 @@
         <div class="row">
             <div class="col-7">
                 <div class="float-left">
-                    {!! $services->total() !!} {{ "Services Total" }}
+                    {!! $products->total() !!} {{ "Products Total" }}
                 </div>
             </div><!--col-->
 
             <div class="col-5">
                 <div class="float-right"> 
-                    {!! $services->render() !!}
+                    {!! $products->render() !!}
                 </div>
             </div><!--col-->
         </div><!--row-->
@@ -99,3 +94,4 @@
 </div><!--card-->
  
 @endsection
+
