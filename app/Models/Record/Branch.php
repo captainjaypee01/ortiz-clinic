@@ -18,8 +18,10 @@ class Branch extends Model
     *
     * @var array
     */
-    protected $fillable = [
-        'user_id',
+
+    protected $primaryKey  = 'id';
+    protected $fillable = [ 
+        'id',
         'name',
         'contact_number',
         'tel_number',

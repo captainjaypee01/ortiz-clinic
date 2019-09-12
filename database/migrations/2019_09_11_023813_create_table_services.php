@@ -14,14 +14,12 @@ class CreateTableServices extends Migration
     public function up()
     {
         Schema::create('services', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('branch_id')->nullable();
+            $table->bigIncrements('id'); 
             $table->string("name")->nullable(); 
             $table->tinyInteger("status")->nullable()->default(1); 
             $table->timestamps();
             $table->softDeletes();
-            
-            $table->index(['branch_id']);
+             
         });
     }
 

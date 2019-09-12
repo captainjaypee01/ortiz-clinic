@@ -19,10 +19,20 @@
                 <a class="nav-link {{
                     active_class(Active::checkUriPattern('admin/record/branch'))
                 }}" href="{{ route('admin.record.branch.index') }}">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <i class="nav-icon fas fa-code-branch"></i>
                     Branch Management
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{
+                    active_class(Active::checkUriPattern('admin/record/service'))
+                }}" href="{{ route('admin.record.service.index') }}">
+                    <i class="nav-icon fas fa-poll-h"></i>
+                    Service Management
+                </a>
+            </li>
+
 
             <li class="nav-title">
                 @lang('menus.backend.sidebar.system')

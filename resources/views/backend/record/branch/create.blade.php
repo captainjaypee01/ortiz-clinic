@@ -35,8 +35,8 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group">
-                        {{ html()->label("Telephone Number")->for('contact') }}
-                        <input type="text" name="tel_number" id="tel_number" placeholder="Telephone Number" class="form-control" required>
+                        {{ html()->label("Telephone Number")->for('tel_number') }}
+                        <input type="text" name="tel_number" id="tel_number" placeholder="Telephone Number" class="form-control">
                     </div>
                 </div>
             </div>

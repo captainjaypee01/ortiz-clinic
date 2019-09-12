@@ -70,6 +70,15 @@ class BranchController extends Controller
     }
 
     public function save($form, $branch){
+        // Validate
+        $data = request()->validate([
+            'name' => 'required', 
+            'contact_number' => 'required', 
+            'province' => 'required', 
+            'city' => 'required', 
+            'address_line_1' => 'required', 
+        ]);
+
         if(isset($form['name']))
             $branch->name = $form["name"];
 
