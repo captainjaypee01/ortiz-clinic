@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Production\CategoryController; 
 use App\Http\Controllers\Backend\Production\ProductController; 
 
 Route::group([
@@ -26,6 +27,26 @@ Route::group([
         });
     });
  
+    // Product Routes
+    Route::group([
+        'prefix' => 'category',
+        'as' => 'category.', 
+    ], function () {
+    
+        Route::get('/', [CategoryController::class, 'index'])->name('index'); 
+        Route::get('/create', [CategoryController::class, 'create'])->name('create');
+        Route::post('/', [CategoryController::class, 'store'])->name('store');
+
+        Route::group(['prefix' => '{category}'], function () {
+            Route::get('/', [CategoryController::class, 'show'])->name('show');
+            Route::get('/edit', [CategoryController::class, 'edit'])->name('edit');
+            Route::get('mark/{status}', [CategoryController::class, 'mark'])->name('mark')->where(['status' => '[0,1]']);
+            Route::patch('/', [CategoryController::class, 'update'])->name('update');
+            Route::delete('/', [CategoryController::class, 'destroy'])->name('destroy');
+        });
+    });
+ 
+
 
 
 });

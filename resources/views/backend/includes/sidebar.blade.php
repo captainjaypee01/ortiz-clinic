@@ -20,7 +20,7 @@
                     active_class(Active::checkUriPattern('admin/record/branch'))
                 }}" href="{{ route('admin.record.branch.index') }}">
                     <i class="nav-icon fas fa-code-branch"></i>
-                    Branch Management
+                    Branch Module
                 </a>
             </li>
 
@@ -29,7 +29,7 @@
                     active_class(Active::checkUriPattern('admin/record/service'))
                 }}" href="{{ route('admin.record.service.index') }}">
                     <i class="nav-icon fas fa-poll-h"></i>
-                    Service Management
+                    Service Module
                 </a>
             </li>
             <li class="nav-title">
@@ -38,10 +38,19 @@
 
             <li class="nav-item">
                 <a class="nav-link {{
+                    active_class(Active::checkUriPattern('admin/production/category'))
+                }}" href="{{ route('admin.production.category.index') }}">
+                    <i class="nav-icon fas fa-list-alt"></i>
+                    Category Module
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{
                     active_class(Active::checkUriPattern('admin/production/product'))
                 }}" href="{{ route('admin.production.product.index') }}">
                     <i class="nav-icon fas fa-capsules"></i>
-                    Product Management
+                    Product Module
                 </a>
             </li>
 

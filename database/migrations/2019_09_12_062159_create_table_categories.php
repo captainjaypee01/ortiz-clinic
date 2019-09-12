@@ -15,12 +15,15 @@ class CreateTableCategories extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string("name")->nullable();
             $table->text("description")->nullable();
 
             $table->tinyInteger("status")->default(1)->nullable();
             $table->timestamps();
             $table->softDeletes();
+            
+            $table->index(['user_id' ]);
         });
     }
 

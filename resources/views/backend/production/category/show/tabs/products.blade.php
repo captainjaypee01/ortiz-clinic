@@ -1,17 +1,19 @@
 
-@if(count($productCategories) > 0)
+@if(count($categoryProducts) > 0)
 <div class="col">
     <div class="table-responsive">
         <table class="table table-hover"> 
             <thead>
                 <tr>
-                    <th>Name</th>  
+                    <th>Name</th> 
+                    <th>Price</th>
                 </tr>
             </thead> 
             <tbody>
-                @foreach($productCategories as $category)
+                @foreach($categoryProducts as $products)
                 <tr>
-                    <td>{{ $category->name }}</td>
+                    <td>{{ $products->name }}</td>
+                    <td>{{ $products->format_price }}</td>
                 </tr>
                 @endforeach   
 

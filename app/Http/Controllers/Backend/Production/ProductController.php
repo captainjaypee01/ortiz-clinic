@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Production;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Production\Product;
+use App\Models\Production\Category;
 use Log;
 
 class ProductController extends Controller
@@ -21,7 +22,7 @@ class ProductController extends Controller
             $products = $products->where("name", "like", "%". $keyword . "%");
         }
 
-        $products = $products->paginate(10)->setpath('');
+        $products = $products->with("categories")->paginate(10)->setpath('');
         $products->appends($append); 
         return view('backend.production.product.index',
             [ 
@@ -39,8 +40,9 @@ class ProductController extends Controller
     public function show(Product $product){ 
         return view('backend.production.product.show',
             [ 
-                "product" => $product,  
-            ]);
+                "product" => $product ,  
+            ])
+            ->withProductCategories($product->categories->all());
     }
 
     public function edit(Product $product){ 
@@ -97,7 +99,7 @@ class ProductController extends Controller
  
         $product->user_id = auth()->user()->id;
 
-        $product->save();
+        $product->save(); 
         
         return redirect()->route('admin.production.product.index')->withFlashSuccess("Product Successfully Saved");
 

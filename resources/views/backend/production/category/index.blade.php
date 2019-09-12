@@ -8,12 +8,12 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Product Management <small class="text-muted">Active Products</small>
+                    Category Management <small class="text-muted">Active Categories</small>
                 </h4>
             </div><!--col-->
 
             <div class="col-sm-7">
-                @include('backend.production.product.includes.header-buttons')
+                @include('backend.production.category.includes.header-buttons')
             </div><!--col-->
         </div><!--row-->
 
@@ -29,40 +29,28 @@
 
         </div><!--row-->
 
-        @if(count($products) > 0)
+        @if(count($categories) > 0)
         <div class="row mt-4">
             <div class="col">
                 <div class="table-responsive">
-                    <table id="product-table" class="table">
+                    <table id="category-table" class="table">
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Name</th>
-                            <th>Price</th> 
-                            <th>Unit</th>
-                            <th>Categories</th>
+                            <th>Name</th>  
                             <th>Status</th>
                             <th>Date Created</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($products as $index => $product) 
+                        @foreach($categories as $index => $category) 
                             <tr>
-                                <td>{{  ($products->perPage() * $products->currentPage() - $products->perPage()) + ($loop->iteration) }}</td>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->format_price }}</td>
-                                <td>{{ $product->unit ? $product->unit : 'N/A' }}</td>
-                                <td>
-                                    @if(count($product->categories) > 0)
-                                        @foreach($product->categories as $category)
-                                        {{ $category->name . ', ' }} 
-                                        @endforeach
-                                    @endif
-                                </td>
-                                <td>{!! $product->status_label !!}</td>
-                                <td>{{ $product->created_at }}</td>
-                                <td>{!! $product->action_buttons !!}</td>
+                                <td>{{  ($categories->perPage() * $categories->currentPage() - $categories->perPage()) + ($loop->iteration) }}</td>
+                                <td>{{ $category->name }}</td> 
+                                <td>{!! $category->status_label !!}</td>
+                                <td>{{ $category->created_at }}</td>
+                                <td>{!! $category->action_buttons !!}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -73,13 +61,13 @@
         <div class="row">
             <div class="col-7">
                 <div class="float-left">
-                    {!! $products->total() !!} {{ "Products Total" }}
+                    {!! $categories->total() !!} {{ "categories Total" }}
                 </div>
             </div><!--col-->
 
             <div class="col-5">
                 <div class="float-right"> 
-                    {!! $products->render() !!}
+                    {!! $categories->render() !!}
                 </div>
             </div><!--col-->
         </div><!--row-->
