@@ -32,8 +32,10 @@ class ProductController extends Controller
     }
 
     public function create(){ 
+        $categories = Category::where("status", 1)->get();
         return view('backend.production.product.create',
             [ 
+                "categories" => $categories,
             ]);
     }
 
@@ -46,10 +48,13 @@ class ProductController extends Controller
     }
 
     public function edit(Product $product){ 
+        $categories = Category::where("status", 1)->get();
         return view('backend.production.product.edit',
             [ 
                 "product" => $product,  
-            ]);
+                "categories" => $categories,
+            ])
+            ->withProductCategories($product->categories->all());
     }
 
     public function assign_branch(Product $product){ 
@@ -63,6 +68,7 @@ class ProductController extends Controller
     }
 
     public function store(Request $request){
+        Log::info($request);
         $product = new Product();
         return $this->save($request, $product);
     }
@@ -100,6 +106,10 @@ class ProductController extends Controller
         $product->user_id = auth()->user()->id;
 
         $product->save(); 
+
+        
+        if(isset($form['categories']))
+            $product->categories()->sync($form['categories']);// = $form["unit"];
         
         return redirect()->route('admin.production.product.index')->withFlashSuccess("Product Successfully Saved");
 

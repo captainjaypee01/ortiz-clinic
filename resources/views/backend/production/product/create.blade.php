@@ -53,6 +53,20 @@
             <div class="row">
                 <div class="col col-sm-12">
                     <div class="form-group">
+                        {{ html()->label("Categories")->for('categories') }}
+                        <select name="categories[]" id="categories" class="selectpicker form-control" multiple="multiple"  data-live-search="true">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                            
+                        </select>
+                    </div>
+                </div> 
+            </div>
+
+            <div class="row">
+                <div class="col col-sm-12">
+                    <div class="form-group">
                         {{ html()->label("Description")->for('description') }}
                         {{ html()->textarea('description')
                                 ->class('form-control')
@@ -81,3 +95,16 @@
     </div><!--card-->
 {{ html()->form()->close() }}
 @endsection
+
+@push('after-styles')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+
+@endpush
+@push('after-scripts')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<script>
+    $('#categories  ').selectpicker();
+</script>
+@endpush
