@@ -13,7 +13,7 @@
 
             <tr>
                 <th>Unit</th>
-                <td>{{ $product->unit }}</td>
+                <td>{{ $service->unit }}</td>
             </tr>
             
             <tr>
