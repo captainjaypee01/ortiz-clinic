@@ -20,7 +20,16 @@
                     active_class(Active::checkUriPattern('admin/record/branch'))
                 }}" href="{{ route('admin.record.branch.index') }}">
                     <i class="nav-icon fas fa-code-branch"></i>
-                    Branch Module
+                    Branch
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{
+                    active_class(Active::checkUriPattern('admin/record/room'))
+                }}" href="{{ route('admin.record.room.index') }}">
+                    <i class="nav-icon fas fa-house-damage"></i>
+                    Rooms
                 </a>
             </li>
 
@@ -29,9 +38,10 @@
                     active_class(Active::checkUriPattern('admin/record/service'))
                 }}" href="{{ route('admin.record.service.index') }}">
                     <i class="nav-icon fas fa-poll-h"></i>
-                    Service Module
+                    Service
                 </a>
             </li>
+
             <li class="nav-title">
                 Production
             </li>
@@ -41,7 +51,7 @@
                     active_class(Active::checkUriPattern('admin/production/category'))
                 }}" href="{{ route('admin.production.category.index') }}">
                     <i class="nav-icon fas fa-list-alt"></i>
-                    Category Module
+                    Category
                 </a>
             </li>
 
@@ -50,7 +60,28 @@
                     active_class(Active::checkUriPattern('admin/production/product'))
                 }}" href="{{ route('admin.production.product.index') }}">
                     <i class="nav-icon fas fa-capsules"></i>
-                    Product Module
+                    Product
+                </a>
+            </li>
+            <li class="nav-title">
+                Transaction
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{
+                    active_class(Active::checkUriPattern('admin/transaction/reservation'))
+                }}" href="{{ route('admin.transaction.reservation.index') }}">
+                    <i class="nav-icon fas fa-book"></i>
+                    Reservation
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{
+                    active_class(Active::checkUriPattern('admin/transaction/order'))
+                }}" href="{{ route('admin.transaction.order.index') }}">
+                    <i class="nav-icon fas fa-shopping-cart"></i>
+                    Orders
                 </a>
             </li>
 
