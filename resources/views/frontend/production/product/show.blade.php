@@ -9,12 +9,12 @@
             <div class="card">
                 <div class="card-header">
                     <strong>
-                        Products - {{ $products->total() . ' current available'}}
+                        Show Product
                     </strong>
                 </div><!--card-header-->
 
                 <div class="card-body">
-                    @foreach($products as $product)
+                    
                     <div class="row mt-4">
                         <div class="col col-md-3">
                             <img src="{{ asset('img/frontend/ortiz-clinic-logo.png') }}" class="d-block w-100 h-50" alt="...">
@@ -22,18 +22,19 @@
                         <div class="col">
                             <div class="card p-4">
                                 <h3>{{ $product->name }}</h3>
-                                <p>{{ $product->price }}</p>
+                                <p>{{ $product->format_price }}</p>
                                 <p>{{ $product->description }}</p>
-                                <a href="{{ route('frontend.production.product.show', $product) }}" class="btn btn-info btn-sm w-25">View Product</a>
+                                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#order-product-modal">
+                                    Order Product
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    @endforeach
+                    </div> 
                 </div>
                 <div class="card-footer">
                     <div class="row">
                         <div class="col">
-                            {!! $products->render() !!}
+                            <a href="{{route('frontend.production.product.index')}}" class="btn btn-info btn-sm">Go Back</a>
                         </div>
                     </div>
                 </div>
@@ -41,4 +42,10 @@
         </div>
     </div>
 </div>
+
+@include('frontend.production.product.includes.modals.confirm-modal')
 @endsection
+
+@push('after-scripts')
+
+@endpush
