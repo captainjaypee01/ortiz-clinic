@@ -8,3 +8,4 @@ require __DIR__.'/auth.php';
 require __DIR__.'/log-viewer.php';
 require __DIR__.'/record.php';
 require __DIR__.'/production.php';
+require __DIR__.'/transaction.php';
