@@ -44,7 +44,8 @@ class BranchController extends Controller
             [ 
                 "branch" => $branch, 
                 'provinces' => $provinces,
-            ]);
+            ])
+            ->withBranchRooms($branch->rooms->all());
     }
 
     public function edit(Branch $branch){

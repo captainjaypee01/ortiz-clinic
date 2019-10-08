@@ -108,6 +108,8 @@ class OrderController extends Controller
 
         $user = User::find($order->user_id);
         
+        Mail::to($user->email)->send(new OrderMail($user, $product, $order, request('quantity')));
+        
         return redirect()->route('admin.transaction.order.index')->withFlashSuccess("Order Successfully Saved. Please check your email for your notification.<br>REFERENCE NUMBER : <strong>" . $order->reference_number. "</strong>");
 
     }

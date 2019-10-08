@@ -20,17 +20,11 @@
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-user"></i> @lang('labels.backend.access.users.tabs.titles.overview')</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#rooms" role="tab" aria-controls="rooms" aria-expanded="true"><i class="fas fa-house-damage"></i> Rooms </a>
-                    </li>
                 </ul>
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="overview" role="tabpanel" aria-expanded="true">
                         @include('backend.record.branch.show.tabs.overview')
-                    </div><!--tab-->
-                    <div class="tab-pane" id="rooms" role="tabpanel" aria-expanded="true">
-                        @include('backend.record.branch.show.tabs.rooms')
                     </div><!--tab-->
                 </div><!--tab-content-->
             </div><!--col-->

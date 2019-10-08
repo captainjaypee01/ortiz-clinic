@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models\Record\Traits\Relationship;
+ 
+use App\Models\Record\Room;
 use App\Models\Record\Service;
  
 /**
@@ -13,4 +15,8 @@ trait BranchRelationship
         return $this->belongsToMany(Service::class);
     }
     
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
 }

@@ -8,12 +8,12 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Branch Management <small class="text-muted">Active Branches</small>
+                    Room Management <small class="text-muted">Active Rooms</small>
                 </h4>
             </div><!--col-->
 
             <div class="col-sm-7">
-                @include('backend.record.branch.includes.header-buttons')
+                @include('backend.record.room.includes.header-buttons')
             </div><!--col-->
         </div><!--row-->
 
@@ -28,32 +28,28 @@
             </div><!--col-->
 
         </div><!--row-->
-        
-        @if(count($branches) > 0)
+        @if(count($rooms) > 0)
         <div class="row mt-4">
             <div class="col">
                 <div class="table-responsive">
-                    <table id="branch-table" class="table">
+                    <table id="room-table" class="table">
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Name</th>
-                            <th>Contact Number / Tel. No</th>
-                            <th>Address</th>
+                            <th>Branch</th>
+                            <th>Name</th> 
                             <th>Status</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($branches as $index => $branch)
-                            <?php $index = ($branch->page - 1) * $branch->per_page + 1; ?>
+                        @foreach($rooms as $index => $room) 
                             <tr>
-                                <td>{{  ($branches->perPage() * $branches->currentPage() - $branches->perPage()) + ($loop->iteration) }}</td>
-                                <td>{{ $branch->name }}</td>
-                                <td>{{ $branch->contact_number . ' | ' . $branch->tel_number }}</td>
-                                <td><p>{{ $branch->sub_address }}</p></td>
-                                <td>{!! $branch->status_label !!}</td>
-                                <td>{!! $branch->action_buttons !!}</td>
+                                <td>{{  ($rooms->perPage() * $rooms->currentPage() - $rooms->perPage()) + ($loop->iteration) }}</td>
+                                <td>{{ $room->branch ? $room->branch->name : 'N/A' }}</td> 
+                                <td>{{ $room->name }}</td> 
+                                <td>{!! $room->status_label !!}</td>
+                                <td>{!! $room->action_buttons !!}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -64,13 +60,13 @@
         <div class="row">
             <div class="col-7">
                 <div class="float-left">
-                    {!! $branches->total() !!} {{ "Branches Total" }}
+                    {!! $rooms->total() !!} {{ "Rooms Total" }}
                 </div>
             </div><!--col-->
 
             <div class="col-5">
                 <div class="float-right"> 
-                    {!! $branches->render() !!}
+                    {!! $rooms->render() !!}
                 </div>
             </div><!--col-->
         </div><!--row-->
