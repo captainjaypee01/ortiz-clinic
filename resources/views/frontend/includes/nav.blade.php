@@ -16,9 +16,12 @@
             <li class="nav-item"><a href="{{route('frontend.record.branch.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.record.branch.index')) }}">Branches</a></li>
             <li class="nav-item"><a href="{{route('frontend.record.service.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.record.service.index')) }}">Services</a></li>
             <li class="nav-item"><a href="{{route('frontend.production.product.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.production.product.index')) }}">Products</a></li>
+            @auth
+                
             <li class="nav-item"><a href="{{route('frontend.transaction.order.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.transaction.order.index')) }}">Orders</a></li>
             <li class="nav-item"><a href="{{route('frontend.transaction.reservation.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.transaction.reservation.index')) }}">Reservations</a></li>
-
+            
+            @endauth
             @guest
 
                 <li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.login')) }}">@lang('navs.frontend.login')</a></li>

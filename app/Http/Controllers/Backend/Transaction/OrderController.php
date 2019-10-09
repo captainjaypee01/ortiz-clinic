@@ -81,6 +81,7 @@ class OrderController extends Controller
     public function save($form, $order){
         request()->validate([ 
             'products' => 'required',
+            'customer' => 'required',
             "quantity.*" => 'required',   
         ]);
 

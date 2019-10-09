@@ -39,7 +39,7 @@ class ReservationMail extends Mailable
         return $this
             ->from([ "address" => "clinic.ortizskin@gmail.com", "name" => "Ortiz Skin Clinic" ])
             ->view('frontend.mail.reservation-details')
-            ->subject("Welcome to Ortiz Skin Clinic")
+            ->subject("Welcome to Ortiz Skin Clinic",  ['app_name' => app_name()])
             ->with([
                 "user" => $this->user,
                 "service" => $this->service,

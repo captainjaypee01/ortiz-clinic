@@ -40,7 +40,7 @@ class OrderMail extends Mailable
         return $this
             ->from([ "address" => "clinic.ortizskin@gmail.com", "name" => "Ortiz Skin Clinic" ])
             ->view('frontend.mail.order-details')
-            ->subject("Welcome to Ortiz Skin Clinic")
+            ->subject("Welcome to Ortiz Skin Clinic",  ['app_name' => app_name()])
             ->with([
                 "user" => $this->user,
                 "product" => $this->product,

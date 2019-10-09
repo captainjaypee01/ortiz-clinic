@@ -13,8 +13,17 @@ class ReservationListController extends Controller
      */
     public function index()
     {
+        $reservations = auth()->user()->reservations()->orderBy("created_at", "desc");
+        $append = array();
+        if($keyword = request("search")){
+            $append["search"] = $keyword;
+            $reservations = $reservations->where("reference_number", "like", "%". $keyword . "%");
+        }
+
+        $reservations = $reservations->paginate(10)->setpath('');
+        $reservations->appends($append); 
         return view('frontend.transaction.reservation.index')
-                ->withReservations(auth()->user()->reservations );
+                ->withReservations($reservations );
     }
     
     /**
