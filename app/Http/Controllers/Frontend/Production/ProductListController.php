@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Frontend\Production;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller; 
-use App\Mail\Frontend\Production\OrderMail;
+use App\Mail\Frontend\Transaction\OrderMail;
 use App\Models\Production\Product;
 use App\Models\Transaction\Order;
 use Mail;
@@ -51,7 +51,7 @@ class ProductListController extends Controller
 
         Mail::to($user->email)->send(new OrderMail($user, $product, $order, request('quantity')));
 
-        return redirect()->route('frontend.transactions.order.index')->withFlashSuccess("Order Successfully Saved. Please check your email for your notification.<br>REFERENCE NUMBER : <strong>" . $order->reference_number. "</strong>");
+        return redirect()->route('frontend.transaction.order.index')->withFlashSuccess("Order Successfully Saved. Please check your email for your notification.<br>REFERENCE NUMBER : <strong>" . $order->reference_number. "</strong>");
     }
 
     function generate_string($strength = 20) {

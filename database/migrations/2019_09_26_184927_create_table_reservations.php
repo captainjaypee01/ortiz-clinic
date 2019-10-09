@@ -13,7 +13,7 @@ class CreateTableReservations extends Migration
      */
     public function up()
     {
-        Schema::create('reservartions', function (Blueprint $table) {
+        Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id');
             // Foreign Keys
             $table->unsignedBigInteger('user_id')->nullable();
@@ -32,7 +32,7 @@ class CreateTableReservations extends Migration
 
             $table->text("payment_location")->nullabe();
             
-            $table->tinyInteger("payment_status")->default(1)->nullable();
+            $table->tinyInteger("payment_status")->default(0)->nullable();
             $table->tinyInteger("status")->default(1)->nullable();
             $table->timestamps();
             $table->softDeletes(); 

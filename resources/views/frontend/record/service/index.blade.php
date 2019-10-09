@@ -23,7 +23,10 @@
                             <div class="card p-4">
                                 <h3>{{ $service->name }}</h3>
                                 <p>{{ $service->price }}</p>
-                                <p>{{ $service->description }}</p>
+                                <p>{{ $service->description }}</p> 
+                                @auth
+                                <a href="{{ route('frontend.record.service.show', $service) }}" class="btn btn-info btn-sm w-25">View Product</a>
+                                @endauth
                             </div>
                         </div>
                     </div>

@@ -4,9 +4,9 @@ namespace App\Models\Transaction\Traits\Attribute;
 use Illuminate\Support\Carbon;
 
 /**
- * Trait OrderAttribute.
+ * Trait ReservationAttribute.
  */
-trait OrderAttribute
+trait ReservationAttribute
 {
     
     /**
@@ -19,17 +19,25 @@ trait OrderAttribute
     /**
      * @return string
      */
-    public function getFormatOrderDateAttribute(){
-        $dt = new Carbon($this->created_at);
+    public function getFormatReservationDateAttribute(){
+        $dt = new Carbon($this->reservation_date);
         return $dt->format("F d, Y");
     }
     
     /**
      * @return string
      */
+    public function getFormatReservationTimeAttribute(){
+        $dt = new Carbon($this->start_time);
+        return $dt->format("h:i A");
+    }
+
+    /**
+     * @return string
+     */
     public function getShowButtonAttribute()
     {
-        return '<a href="'.route('admin.transaction.order.show', $this).'" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.view').'" class="btn btn-info"><i class="fas fa-eye"></i></a>';
+        return '<a href="'.route('admin.transaction.reservation.show', $this).'" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.view').'" class="btn btn-info"><i class="fas fa-eye"></i></a>';
     }
 
     /**
@@ -37,7 +45,7 @@ trait OrderAttribute
      */
     public function getEditButtonAttribute()
     {
-        return '<a href="'.route('admin.transaction.order.edit', $this).'" class="btn btn-primary"><i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.edit').'"></i></a>';
+        return '<a href="'.route('admin.transaction.reservation.edit', $this).'" class="btn btn-primary"><i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.edit').'"></i></a>';
     }
 
     /**
@@ -45,7 +53,7 @@ trait OrderAttribute
      */
     public function getDeleteButtonAttribute()
     {
-        return '<a href="'.route('admin.transaction.order.destroy', $this).'"
+        return '<a href="'.route('admin.transaction.reservation.destroy', $this).'"
 			 data-method="delete"
 			 data-trans-button-cancel="'.__('buttons.general.cancel').'"
 			 data-trans-button-confirm="'.__('buttons.general.crud.delete').'"
@@ -56,9 +64,9 @@ trait OrderAttribute
     public function getStatusButtonAttribute(){
         switch($this->status){
             case 0 : 
-                return '<a href="'.route('admin.transaction.order.mark', [$this, 1]).'" class="btn btn-success"><i class="fas fa-check" data-toggle="tooltip" data-placement="top" title="'.__('buttons.backend.access.users.activate').'"></i></a>';
+                return '<a href="'.route('admin.transaction.reservation.mark', [$this, 1]).'" class="btn btn-success"><i class="fas fa-check" data-toggle="tooltip" data-placement="top" title="'.__('buttons.backend.access.users.activate').'"></i></a>';
             case 1 :
-                return '<a href="'.route('admin.transaction.order.mark', [$this, 0]).'" class="btn btn-warning"><i class="fas fa-times" data-toggle="tooltip" data-placement="top" title="'.__('buttons.backend.access.users.deactivate').'"></i></a>';
+                return '<a href="'.route('admin.transaction.reservation.mark', [$this, 0]).'" class="btn btn-warning"><i class="fas fa-times" data-toggle="tooltip" data-placement="top" title="'.__('buttons.backend.access.users.deactivate').'"></i></a>';
             default :
                 return '';
         }

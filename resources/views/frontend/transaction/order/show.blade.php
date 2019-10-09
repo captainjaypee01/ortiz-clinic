@@ -38,6 +38,10 @@
                                         <td>{{ $order->format_amount }}</td>
                                     </tr> 
                                     <tr>
+                                        <th>Date Ordered</th>
+                                        <td>{{ $order->format_order_date }}</td>
+                                    </tr> 
+                                    <tr>
                                         <th>Last Updated At</th>
                                         <td>
                                             @if($order->updated_at)

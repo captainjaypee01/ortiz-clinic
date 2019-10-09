@@ -28,8 +28,9 @@ Route::group([
     
         Route::get('/', [ServiceListController::class, 'index'])->name('index');  
 
-        Route::group(['prefix' => '{branch}'], function () {
+        Route::group(['prefix' => '{service}'], function () {
             Route::get('/', [ServiceListController::class, 'show'])->name('show'); 
+            Route::post('/reserve', [ServiceListController::class, 'reserve'])->name('reserve'); 
         });
     });
 

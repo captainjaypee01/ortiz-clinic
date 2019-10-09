@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail\Frontend\Production;
+namespace App\Mail\Frontend\Transaction;
 
 use App\Models\Auth\User;
 use App\Models\Production\Product;
