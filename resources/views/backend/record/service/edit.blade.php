@@ -40,7 +40,7 @@
                 </div> 
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group">
-                        {{ html()->label("Unit")->for('unit') }}
+                        {{ html()->label("Duration")->for('duration') }}
                         <input type="number" name="duration" id="duration" class="form-control" value="{{ $service->duration }}" required>
                     </div>
                 </div> 
