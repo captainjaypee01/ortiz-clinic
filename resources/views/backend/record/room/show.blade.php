@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Branch Management' . ' | ' . 'Show Branch')
+@section('title', 'Room Management' . ' | ' . 'Show Room')
 
 @section('content')
 <div class="card">
@@ -8,8 +8,8 @@
         <div class="row">
             <div class="col-sm-5">
                 <h4 class="card-title mb-0">
-                    Branch Management
-                    <small class="text-muted">View Branch</small>
+                    Room Management
+                    <small class="text-muted">View Room</small>
                 </h4>
             </div><!--col-->
         </div><!--row-->
@@ -24,7 +24,7 @@
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="overview" role="tabpanel" aria-expanded="true">
-                        @include('backend.record.branch.show.tabs.overview')
+                        @include('backend.record.room.show.tabs.overview')
                     </div><!--tab-->
                 </div><!--tab-content-->
             </div><!--col-->
@@ -35,10 +35,10 @@
         <div class="row">
             <div class="col">
                 <small class="float-right text-muted">
-                    <strong>@lang('labels.backend.access.users.tabs.content.overview.created_at'):</strong> {{ timezone()->convertToLocal($branch->created_at) }} ({{ $branch->created_at->diffForHumans() }}),
-                    <strong>@lang('labels.backend.access.users.tabs.content.overview.last_updated'):</strong> {{ timezone()->convertToLocal($branch->updated_at) }} ({{ $branch->updated_at->diffForHumans() }})
-                    @if($branch->trashed())
-                        <strong>@lang('labels.backend.access.users.tabs.content.overview.deleted_at'):</strong> {{ timezone()->convertToLocal($branch->deleted_at) }} ({{ $branch->deleted_at->diffForHumans() }})
+                    <strong>@lang('labels.backend.access.users.tabs.content.overview.created_at'):</strong> {{ timezone()->convertToLocal($room->created_at) }} ({{ $room->created_at->diffForHumans() }}),
+                    <strong>@lang('labels.backend.access.users.tabs.content.overview.last_updated'):</strong> {{ timezone()->convertToLocal($room->updated_at) }} ({{ $room->updated_at->diffForHumans() }})
+                    @if($room->trashed())
+                        <strong>@lang('labels.backend.access.users.tabs.content.overview.deleted_at'):</strong> {{ timezone()->convertToLocal($room->deleted_at) }} ({{ $room->deleted_at->diffForHumans() }})
                     @endif
                 </small>
             </div><!--col-->

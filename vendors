@@ -1,1 +1,2 @@
 composer require consoletvs/charts:6.*
+composer require superbalist/laravel-google-cloud-storage
