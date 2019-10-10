@@ -80,6 +80,14 @@
                         </div><!--table-responsive-->\
                     </div>
                     
+                    <hr>
+                    <h3 class="text-title">Payment Details</h3>
+                    <div class="row">
+                        <div class="col">
+                            <img src="{{  $reservation->format_payment_location }}" alt="No image uploaded">
+                        </div>
+                    </div>
+                        
                         
                 </div>
                 <div class="card-footer">
@@ -87,10 +95,18 @@
                         <div class="col">
                             <a href="{{route('frontend.transaction.reservation.index')}}" class="btn btn-info btn-sm">Go Back</a>
                         </div>
+                        <div class="col text-right">
+                            
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#upload-payment-modal">
+                                Upload Payment
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
- @endsection
+@include('frontend.transaction.reservation.includes.modals.upload-payment-modal')
+
+@endsection

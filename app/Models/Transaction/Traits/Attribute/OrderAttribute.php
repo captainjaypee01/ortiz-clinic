@@ -23,6 +23,10 @@ trait OrderAttribute
         $dt = new Carbon($this->created_at);
         return $dt->format("F d, Y");
     }
+
+    public function getFormatPaymentLocationAttribute(){
+        return $this->payment_location ? 'https://storage.cloud.google.com/ortiz_clinic/' . $this->payment_location : asset('img/frontend/ortiz-clinic-logo.png');
+    }
     
     /**
      * @return string

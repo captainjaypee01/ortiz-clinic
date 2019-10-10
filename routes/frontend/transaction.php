@@ -19,6 +19,7 @@ Route::group([
         Route::group(['prefix' => '{order}',
         'middleware' => ['auth', 'password_expires'],], function () {
             Route::get('/', [OrderListController::class, 'show'])->name('show');  
+            Route::post('/upload', [OrderListController::class, 'upload'])->name('upload');  
         });
     });
     
@@ -33,6 +34,7 @@ Route::group([
         Route::group(['prefix' => '{reservation}',
         'middleware' => ['auth', 'password_expires'],], function () {
             Route::get('/', [ReservationListController::class, 'show'])->name('show');  
+            Route::post('/upload', [ReservationListController::class, 'upload'])->name('upload');  
         });
     });
 });

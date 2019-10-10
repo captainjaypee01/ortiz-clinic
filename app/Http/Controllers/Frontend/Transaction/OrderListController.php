@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction\Order;
+use Log;
 
 class OrderListController extends Controller
 {
@@ -34,5 +35,21 @@ class OrderListController extends Controller
     {
         return view('frontend.transaction.order.show')
                 ->withOrder($order);
+    }
+    
+    public function upload(Order $order){
+        Log::info(request());
+        request()->validate([
+            'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
+        ]);
+        if(request()->has('upload_file')){
+            $file = request()->upload_file;
+            $location = $file->store("uploads/order", 'gcs');  
+            $order->payment_location = $location;
+            $order->save();
+            return redirect()->route('frontend.transaction.order.show', $order)->withFlashSuccess("Payment Upload Successfully");
+        }
+
+        return redirect()->route('frontend.transaction.order.show', $order)->withFlashWarning("Please re-upload your payment");
     }
 }

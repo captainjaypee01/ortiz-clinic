@@ -31,6 +31,10 @@ trait ReservationAttribute
         $dt = new Carbon($this->start_time);
         return $dt->format("h:i A");
     }
+    
+    public function getFormatPaymentLocationAttribute(){
+        return $this->payment_location ? 'https://storage.cloud.google.com/ortiz_clinic/' . $this->payment_location : asset('img/frontend/ortiz-clinic-logo.png');
+    }
 
     /**
      * @return string
