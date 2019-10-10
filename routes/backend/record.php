@@ -22,6 +22,8 @@ Route::group([
             Route::get('/', [BranchController::class, 'show'])->name('show');
             Route::get('/edit', [BranchController::class, 'edit'])->name('edit');
             Route::get('mark/{status}', [BranchController::class, 'mark'])->name('mark')->where(['status' => '[0,1]']);
+            Route::get('/rooms/{room}/delete', [BranchController::class, 'destroyRoom'])->name('rooms.destroy');
+            Route::post('/rooms', [BranchController::class, 'storeRoom'])->name('rooms.add');
             Route::patch('/', [BranchController::class, 'update'])->name('update');
             Route::delete('/', [BranchController::class, 'destroy'])->name('destroy');
         });

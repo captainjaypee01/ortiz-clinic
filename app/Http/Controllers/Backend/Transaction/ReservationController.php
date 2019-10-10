@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Backend\Transaction;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\Backend\Transaction\ReservationPaymentMail;
 use App\Mail\Frontend\Transaction\ReservationMail;
 use App\Models\Auth\User;
-use App\Models\Record\Branch;
+use App\Models\Record\Room;
 use App\Models\Record\Service;
 use App\Models\Transaction\Reservation;
 use Log;
@@ -47,9 +48,13 @@ class ReservationController extends Controller
     }
 
     public function show(Reservation $reservation){ 
+        $users = User::role('employee')->get();
+        $rooms = Room::where("branch_id", $reservation->branch_id)->where("status", 1)->get();
         return view('backend.transaction.reservation.show',
             [ 
                 "reservation" => $reservation,  
+                "users" => $users,
+                "rooms" => $rooms,
             ])
             ->withService($reservation->service);
     }
@@ -117,6 +122,38 @@ class ReservationController extends Controller
         $reservation->status = $status;
         $reservation->save();
         return redirect()->route('admin.transaction.reservation.index')->withFlashSuccess("Reservation Status Saved");
+    }
+
+    public function approve(Reservation $reservation){
+        request()->validate([ 
+            'employee' => 'required', 
+            'room' => 'required',
+        ]);
+
+        $user = User::find($reservation->user_id);
+        
+        $reservation->payment_status = 1;
+        $reservation->room_id = request('room');
+        $reservation->employee_id = request('employee');
+        $reservation->save(); 
+
+        $service = Service::find($reservation->service_id);
+        Mail::to($user->email)->send(new ReservationPaymentMail($user, $service, $reservation)); 
+
+        return redirect()->route('admin.transaction.reservation.show', $reservation)->withFlashSuccess("Reservation Payment Status Saved and Email Successfully Sent");
+    }
+
+    public function reject(Reservation $reservation){
+        $user = User::find($reservation->user_id);
+        
+        $reservation->payment_status = 2;
+        $reservation->save(); 
+         
+        $service = Service::find($reservation->service_id);
+
+        Mail::to($user->email)->send(new ReservationPaymentMail($user, $service, $reservation)); 
+
+        return redirect()->route('admin.transaction.reservation.show', $reservation)->withFlashSuccess("Reservation Payment Status Rejected and Email Successfully Sent");
     }
 
     function generate_string($strength = 20) {

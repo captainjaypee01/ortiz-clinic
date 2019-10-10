@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Backend\Transaction;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\Backend\Transaction\OrderPaymentMail;
+use App\Mail\Frontend\Transaction\OrderMail;
 use App\Models\Auth\User;
 use App\Models\Production\Product;
 use App\Models\Transaction\Order;
 use Log;
+use Mail;
 
 class OrderController extends Controller
 {
@@ -120,6 +123,29 @@ class OrderController extends Controller
         $order->save();
         return redirect()->route('admin.transaction.order.index')->withFlashSuccess("Order Status Saved");
     }
+
+    public function approve(Order $order){
+        $user = User::find($order->user_id);
+        
+        $order->payment_status = 1;
+        $order->save(); 
+          
+        Mail::to($user->email)->send(new OrderPaymentMail($user, $order)); 
+
+        return redirect()->route('admin.transaction.order.show', $order)->withFlashSuccess("Order Payment Status Approved and Email Successfully Sent");
+    }
+
+    public function reject(Order $order){
+        $user = User::find($order->user_id);
+        
+        $order->payment_status = 2;
+        $order->save(); 
+         
+        Mail::to($user->email)->send(new OrderPaymentMail($user, $order)); 
+
+        return redirect()->route('admin.transaction.order.show', $order)->withFlashSuccess("Order Payment Status Rejected and Email Successfully Sent");
+    }
+
 
     function generate_string($strength = 20) {
         $input = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

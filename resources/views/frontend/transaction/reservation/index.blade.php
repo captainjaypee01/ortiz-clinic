@@ -46,7 +46,7 @@
                                         <th>Total Amount</th>
                                         <th>Payment Status</th>
                                         <th>Status</th>
-                                        <th>Reservation Date</th>
+                                        <th>Reservation Date and Time</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -58,7 +58,7 @@
                                             <td>{{ $reservation->format_amount }}</td>
                                             <td>{!! $reservation->status_payment !!}</td>
                                             <td>{!! $reservation->status_label !!}</td>
-                                            <td>{!! $reservation->created_at !!}</td>
+                                            <td>{!! $reservation->format_reservation_date . ' ' . $reservation->format_reservation_time !!}</td>
                                             <td>
                                                 <a href="{{route('frontend.transaction.reservation.show', $reservation) }}" data-toggle="tooltip" data-placement="top" title="{{__('buttons.general.crud.view')}}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                                             </td>

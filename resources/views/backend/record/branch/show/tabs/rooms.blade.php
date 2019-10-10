@@ -1,4 +1,13 @@
 
+
+    <div class="row mb-4">
+        <div class="col">
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add-room-modal">
+                    Add Room
+                </button>   
+        </div>
+        @include('backend.record.branch.show.modals.add-room')
+    </div>
 @if(count($branchRooms) > 0)
 <div class="col">
     <div class="table-responsive">
@@ -7,6 +16,7 @@
                 <tr>
                     <th>Name</th>  
                     <th>Status</th>
+                    <th></th>
                 </tr>
             </thead> 
             <tbody>
@@ -14,6 +24,9 @@
                 <tr>
                     <td>{{ $room->name }}</td>
                     <td>{!! $branch->status_label !!}</td>
+                    <td>
+                        <a href="{{ route('admin.record.branch.rooms.destroy', [$branch, $room]) }}" class="btn btn-warning btn-sm">Remove </a>
+                    </td>
                 </tr>
                 @endforeach   
 

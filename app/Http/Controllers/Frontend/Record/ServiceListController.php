@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Mail\Frontend\Transaction\ReservationMail;
 use App\Models\Record\Branch;
+use App\Models\Record\Room;
 use App\Models\Record\Service;
 use App\Models\Transaction\Reservation;
+use Carbon\Carbon;
 use Log;
 use Mail;
 
@@ -47,6 +49,23 @@ class ServiceListController extends Controller
             'reservation_time' => 'required', 
         ]); 
         
+        $reservations = Reservation::where("status", 1)->whereDate("reservation_date", request('reservation_date'))->get();
+        $rooms = Room::where("status", 1)->get(); 
+        $ctr = 0;
+        if(count($reservations) > 0){
+            foreach($reservations as $res){ 
+                $time = Carbon::parse($res->reservation_time);
+                $reserveTime = Carbon::parse(request("reservation_time"));
+                $time->addMinutes($res->duration);
+                $reserveTime->addMinutes($service->duration);
+                if($time->gt($reserveTime) && $reserveTime->gt(Carbon::parse($res->reservation_time)))
+                    $ctr++;
+            }
+        }
+        if(count($rooms) == $ctr)
+            return redirect()->route('frontend.record.service.show', $service)->withFlashWarning("There are some conflicts on your selected time. Please change your selected time.");
+        
+
         $reservation->total_amount = $service->price;
         $reservation->branch_id = request('branch');
         $reservation->service_id = $service->id;

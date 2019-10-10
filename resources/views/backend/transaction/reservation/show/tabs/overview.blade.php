@@ -21,6 +21,10 @@
                 <td>{{ $reservation->format_reservation_time }}</td>
             </tr> 
             <tr>
+                <th>Payment Status</th>
+                <td>{!! $reservation->status_payment !!}</td>
+            </tr> 
+            <tr>
                 <th>Last Updated At</th>
                 <td>
                     @if($reservation->updated_at)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Record;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Record\Branch;
+use App\Models\Record\Room;
 use DB;
 
 class BranchController extends Controller
@@ -119,6 +120,31 @@ class BranchController extends Controller
     public function getProvinces(){
         return DB::select("select * from provinces where status = 1");
     }
+    public function storeRoom(Branch $branch){
+        
+        $room = new Room();
+        return $this->saveRoom($branch, $room);
+        
+    }
 
+    public function updateRoom(){
+
+    } 
+
+    public function saveRoom($branch, $room){
+        // Validate
+        $data = request()->validate([
+            'name' => 'required',   
+        ]);
+        $room->branch_id = $branch->id;
+        $room->name = request('name'); 
+        $room->save();
+        return redirect(route('admin.record.branch.show', $branch) . '#rooms')->withFlashSuccess("Room Saved");
+
+    }
     
+    public function destroyRoom(Branch $branch, Room $room){  
+        $room->delete();
+        return redirect(route('admin.record.branch.show', $branch) . '#rooms')->withFlashSuccess("Room Deleted"); 
+    }
 }

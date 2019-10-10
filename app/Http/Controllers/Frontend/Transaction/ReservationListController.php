@@ -13,7 +13,7 @@ class ReservationListController extends Controller
      */
     public function index()
     {
-        $reservations = auth()->user()->reservations()->reservationBy("created_at", "desc");
+        $reservations = auth()->user()->reservations()->orderBy("created_at", "desc");
         $append = array();
         if($keyword = request("search")){
             $append["search"] = $keyword;

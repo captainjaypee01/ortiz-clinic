@@ -98,7 +98,7 @@ trait OrderAttribute
      * @return string
      */
     public function getStatusPaymentAttribute(){
-        return $this->payment_status == 1 ? '<span class="badge badge-success">Paid</span>' : '<span class="badge badge-danger">Not Paid</span>';
+        return $this->payment_status == 1 ? '<span class="badge badge-success">Paid</span>' : ( $this->payment_status == 2 ? '<span class="badge badge-danger">Rejected</span>' :'<span class="badge badge-warning">Not Paid</span>');
     }
     
 }

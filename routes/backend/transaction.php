@@ -22,6 +22,8 @@ Route::group([
             Route::get('/', [OrderController::class, 'show'])->name('show');
             Route::get('/edit', [OrderController::class, 'edit'])->name('edit');
             Route::get('mark/{status}', [OrderController::class, 'mark'])->name('mark')->where(['status' => '[0,1]']);
+            Route::post('approve/', [OrderController::class, 'approve'])->name('approve'); 
+            Route::post('reject/', [OrderController::class, 'reject'])->name('reject'); 
             Route::patch('/', [OrderController::class, 'update'])->name('update');
             Route::delete('/', [OrderController::class, 'destroy'])->name('destroy');
         });
@@ -42,6 +44,8 @@ Route::group([
             Route::get('/', [ReservationController::class, 'show'])->name('show');
             Route::get('/edit', [ReservationController::class, 'edit'])->name('edit'); 
             Route::get('mark/{status}', [ReservationController::class, 'mark'])->name('mark')->where(['status' => '[0,1]']); 
+            Route::post('approve/', [ReservationController::class, 'approve'])->name('approve'); 
+            Route::post('reject/', [ReservationController::class, 'reject'])->name('reject'); 
             Route::patch('/', [ReservationController::class, 'update'])->name('update');
             Route::delete('/', [ReservationController::class, 'destroy'])->name('destroy');
         });

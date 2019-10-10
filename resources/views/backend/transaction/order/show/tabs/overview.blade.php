@@ -22,6 +22,11 @@
             </tr> 
 
             <tr>
+                <th>Payment Status</th>
+                <td>{!! $order->status_payment !!}</td>
+            </tr> 
+            
+            <tr>
                 <th>Last Updated At</th>
                 <td>
                     @if($order->updated_at)
