@@ -40,7 +40,7 @@ class ReservationListController extends Controller
         request()->validate([
             'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
         ]);
-        if(request()->has('upload_file')){
+        if(request()->hasFile('upload_file')){
             $file = request()->upload_file;
             $location = $file->store("uploads/reservation", 'gcs');  
             $reservation->payment_location = $location;

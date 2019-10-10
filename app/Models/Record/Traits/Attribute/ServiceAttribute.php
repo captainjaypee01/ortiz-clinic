@@ -10,6 +10,11 @@ trait ServiceAttribute
     public function getFormatPriceAttribute(){
         return "P" . number_format($this->price, 2,".",",");
     }
+    
+    public function getFormatImageLocationAttribute(){
+        return $this->image_location ? 'https://storage.cloud.google.com/ortiz_clinic/' . $this->image_location : asset('img/frontend/ortiz-clinic-logo.png');
+    }
+
     /**
      * @return string
      */

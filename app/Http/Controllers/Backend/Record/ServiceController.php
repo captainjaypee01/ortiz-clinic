@@ -67,6 +67,7 @@ class ServiceController extends Controller
 
     public function store(Request $request){
         $service = new Service();
+        
         return $this->save($request, $service);
     }
 
@@ -85,6 +86,7 @@ class ServiceController extends Controller
             'name' => 'required', 
             'description' => 'required', 
             'price' => 'required',  
+            'duration' => 'required',   
             // 'uplaod_file' => 'required',  
         ]);
 
@@ -97,14 +99,18 @@ class ServiceController extends Controller
         if(isset($form['price']))
             $service->price = $form["price"];
 
-        if(isset($form['unit']))
-            $service->unit = $form["unit"];
+        if(isset($form['duration']))
+            $service->duration = $form["duration"];
 
-        if(request()->has('upload_file')){
+        if(request()->hasFile('upload_file')){ 
+            request()->validate([ 
+                'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',  
+            ]);
              // Upload the file and put it to 'uploads' folder
              $file = request()->file('upload_file');
-             $location = $file->store('service');
+             $location = $file->store("uploads/service", 'gcs'); 
              $service->filename = $file->getClientOriginalName();
+             $service->image_location = $location;
              $service->location = $location;
              $service->type = "service";
              $service->size = $file->getClientSize();
@@ -123,20 +129,7 @@ class ServiceController extends Controller
 
     public function store_branch(Service $service){  
         $service->branches()->sync(request('branches'));
-        return redirect()->route('admin.record.service.index')->withFlashSuccess("Branches Successfully Updated");
-        /*
-        if($service && $branch){
-            $branchService = BranchService::where("service_id", $service->id)->where("branch_id", $branch->id)->get();
-            if(count($branchService) > 0)
-                return redirect()->route('admin.record.service.index')->withFlashWarning("The Service is already in the " . $branch->name);
-            else
-                $service->branches()->attach(request('branch')); 
-
-            return redirect()->route('admin.record.service.index')->withFlashSuccess("Adding Service To ". $branch->name . " Successfully Saved");
-        }
-        else
-            return redirect()->route('admin.record.service.index')->withFlashWarning("Please Try Again");
-            */
+        return redirect()->route('admin.record.service.index')->withFlashSuccess("Branches Successfully Updated"); 
     }
 
     public function remove_branch(Request $request){

@@ -3,7 +3,7 @@
 @section('title', 'Product Management' . ' | ' . 'Edit Product')
 
 @section('content')
-{{ html()->modelForm($product, 'PATCH', route('admin.production.product.update', $product))->class('form-horizontal')->open() }}
+{{ html()->modelForm($product, 'PATCH', route('admin.production.product.update', $product))->class('form-horizontal')->attribute("enctype","multipart/form-data")->open() }}
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -76,6 +76,26 @@
                     </div>
                 </div> 
             </div> 
+
+            <div class="row">
+                <div class="col col-sm-12">
+                    <div class="form-group">
+                        {{ html()->label("Image Upload")->for('upload_file') }}
+                        {{ html()->file('upload_file')
+                                ->class('form-control')  }}  
+                    </div>
+                </div> 
+            </div>
+            <div class="row">
+                
+                <div class="col col-sm-12">
+                    <div class="form-group">
+                        <p class = "mb-2"> Preview Uploaded Photo </p>
+                        <img src="{{ $product->format_image_location }}" alt="Preview Upload" id="imagePayment" class="img w-100">
+                    </div>
+                </div> 
+            </div>
+    
             
 
         </div><!--card-body-->
@@ -111,5 +131,47 @@
     @endforeach 
     $('#categories').val(selectedCategories); 
     $('#categories').selectpicker('refresh'); 
+
+        
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            // Get Image size
+            // var fileInput = $(this).find("#imgInp")[0],
+            //     file = fileInput.files && fileInput.files[0];
+            var file = input.files && input.files[0];
+            if( file ) {
+                var img = new Image();
+
+                img.src = window.URL.createObjectURL( file );
+
+                img.onload = function() {
+                    var width = img.naturalWidth,
+                        height = img.naturalHeight;
+
+                    window.URL.revokeObjectURL( img.src );
+
+                    reader.onload = function(e) {
+                        console.log(e);
+                        $('#imagePayment').attr('src', e.target.result);
+                        $("#blah").hide();
+                        $("#imagePayment").show();
+                        // $("#imagePayment").css('background-image','url('+ e.target.result + ')'); 
+                        // $("#imagePayment").css('height',"350px");
+                        // $("#imagePayment").css('width',"350px");
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                };
+            }
+            
+
+        }
+    }
+
+    $(document).on("change", "#upload_file",function() {
+        readURL(this);
+    });
+
 </script>
 @endpush

@@ -31,6 +31,13 @@
                     @endif
                 </td>
             </tr>
+            <tr>
+                <th>Image</th>
+                <td>
+                    <img src="{{ $service->format_image_location }}" alt="Preview Upload" id="imagePayment" class="img w-100">
+                </td>
+            </tr>
+ 
  
         </table>
     </div>

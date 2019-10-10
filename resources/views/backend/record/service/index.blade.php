@@ -39,7 +39,7 @@
                             <th>No.</th>
                             <th>Name</th>
                             <th>Price</th> 
-                            <th>Unit</th>
+                            <th>Duration</th>
                             <th>Available Branches</th>
                             <th>Status</th>
                             <th>Date Created</th>
@@ -53,7 +53,7 @@
                                 <td>{{  ($services->perPage() * $services->currentPage() - $services->perPage()) + ($loop->iteration) }}</td>
                                 <td>{{ $service->name }}</td>
                                 <td>{{ $service->format_price }}</td>
-                                <td>{{ $service->unit ? $service->unit : 'N/A' }}</td>
+                                <td>{{ $service->duration ? $service->duration .' minutes' : 'N/A' }}</td>
                                 <td>
                                     @if(count($service->branches) > 0)
                                         @foreach($service->branches as $branch)

@@ -36,13 +36,13 @@ class OrderListController extends Controller
         return view('frontend.transaction.order.show')
                 ->withOrder($order);
     }
-    
+
     public function upload(Order $order){
         Log::info(request());
         request()->validate([
             'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
         ]);
-        if(request()->has('upload_file')){
+        if(request()->hasFile('upload_file')){
             $file = request()->upload_file;
             $location = $file->store("uploads/order", 'gcs');  
             $order->payment_location = $location;

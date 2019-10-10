@@ -105,6 +105,17 @@ class ProductController extends Controller
  
         $product->user_id = auth()->user()->id;
 
+        if(request()->hasFile('upload_file')){ 
+            request()->validate([ 
+                'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',  
+            ]);
+             // Upload the file and put it to 'uploads' folder
+             $file = request()->file('upload_file');
+             $location = $file->store("uploads/product", 'gcs');  
+             $product->image_location = $location; 
+               
+        }
+        
         $product->save(); 
 
         
@@ -117,20 +128,7 @@ class ProductController extends Controller
 
     public function store_branch(Product $product){  
         $product->branches()->sync(request('branches'));
-        return redirect()->route('admin.production.product.index')->withFlashSuccess("Branches Successfully Updated");
-        /*
-        if($service && $branch){
-            $branchService = BranchService::where("service_id", $service->id)->where("branch_id", $branch->id)->get();
-            if(count($branchService) > 0)
-                return redirect()->route('admin.production.service.index')->withFlashWarning("The Service is already in the " . $branch->name);
-            else
-                $service->branches()->attach(request('branch')); 
-
-            return redirect()->route('admin.production.service.index')->withFlashSuccess("Adding Service To ". $branch->name . " Successfully Saved");
-        }
-        else
-            return redirect()->route('admin.production.service.index')->withFlashWarning("Please Try Again");
-            */
+        return redirect()->route('admin.production.product.index')->withFlashSuccess("Branches Successfully Updated"); 
     }
 
     public function remove_branch(Request $request){

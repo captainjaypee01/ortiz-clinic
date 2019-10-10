@@ -43,7 +43,7 @@
             </li>
 
             <li class="nav-title">
-                Production
+                Products
             </li>
 
             <li class="nav-item">

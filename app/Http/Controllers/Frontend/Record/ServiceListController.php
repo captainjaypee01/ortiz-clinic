@@ -62,7 +62,7 @@ class ServiceListController extends Controller
                     $ctr++;
             }
         }
-        if(count($rooms) == $ctr)
+        if(count($rooms) <= $ctr)
             return redirect()->route('frontend.record.service.show', $service)->withFlashWarning("There are some conflicts on your selected time. Please change your selected time.");
         
 

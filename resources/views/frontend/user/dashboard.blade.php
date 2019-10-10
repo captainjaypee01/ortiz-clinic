@@ -16,7 +16,7 @@
 
                 <div class="card-body">
                     <div class="row mt-4">
-                        <div class="col">
+                        <div class="col  text-center">
                             <h3>Services</h3>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                                     <div class="carousel-inner text-secondary">
                                         @foreach($services as $service)
                                         <div class="carousel-item {{ ($loop->iteration - 1) == 0 ? 'active' : ''}}">
-                                            <img src="{{ asset('img/frontend/ortiz-clinic-logo.png') }}"  height="250px" class="d-block w-100" alt="...">
+                                            <img src="{{ $service->image_location ? $service->format_image_location : asset('img/frontend/ortiz-clinic-logo.png') }}"   class="d-block w-100 h-50" alt="...">
                                             <div class="carousel-caption d-none d-md-block text-body">
                                                 <h5 class="font-weight-bolder">{{ $service->name }}</h5>
                                                 <p><span class="badge badge-info">{{ $service->price . ' | ' . $service->unit}}</span></p> 
@@ -68,7 +68,7 @@
                     @endif
                     <hr>
                     <div class="row mt-4">
-                        <div class="col">
+                        <div class="col text-center">
                             <h3>Products</h3>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                                     <div class="carousel-inner text-secondary">
                                         @foreach($products as $product)
                                         <div class="carousel-item {{ ($loop->iteration - 1) == 0 ? 'active' : ''}}">
-                                            <img src="{{ asset('img/frontend/ortiz-clinic-logo.png') }}"  height="250px" class="d-block w-100" alt="...">
+                                            <img src="{{ $product->image_location ? $product->format_image_location : asset('img/frontend/ortiz-clinic-logo.png') }}"   class="d-block w-100 h-50" alt="...">
                                             <div class="carousel-caption d-none d-md-block text-body">
                                                 <h5 class="font-weight-bolder">{{ $product->name }}</h5>
                                                 <p><span class="badge badge-info">{{ $product->format_price  }}</span></p>
