@@ -17,7 +17,7 @@
                     @foreach($products as $product)
                     <div class="row mt-4">
                         <div class="col col-md-3">
-                            <img src="{{ asset('img/frontend/ortiz-clinic-logo.png') }}" class="d-block w-100 h-50" alt="...">
+                            <img src="{{ $product->image_location ? $product->format_image_location : asset('img/frontend/ortiz-clinic-logo.png') }}" class="d-block w-100 h-50" alt="...">
                         </div>
                         <div class="col">
                             <div class="card p-4">

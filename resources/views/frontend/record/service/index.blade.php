@@ -17,7 +17,7 @@
                     @foreach($services as $service)
                     <div class="row mt-4">
                         <div class="col col-md-3">
-                            <img src="{{ asset('img/frontend/ortiz-clinic-logo.png') }}" class="d-block w-100 h-50" alt="...">
+                            <img src="{{ $service->image_location ? $service->format_image_location : asset('img/frontend/ortiz-clinic-logo.png') }}" class="d-block w-100 h-50" alt="...">
                         </div>
                         <div class="col">
                             <div class="card p-4">
@@ -25,7 +25,7 @@
                                 <p>{{ $service->price }}</p>
                                 <p>{{ $service->description }}</p> 
                                 @auth
-                                <a href="{{ route('frontend.record.service.show', $service) }}" class="btn btn-info btn-sm w-25">View Product</a>
+                                <a href="{{ route('frontend.record.service.show', $service) }}" class="btn btn-info btn-sm w-25">View Service</a>
                                 @endauth
                             </div>
                         </div>
