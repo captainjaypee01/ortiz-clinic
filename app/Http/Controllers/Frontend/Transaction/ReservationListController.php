@@ -56,8 +56,8 @@ class ReservationListController extends Controller
             
             $reservation = new Reservation(); 
             $reservation->reference_number = $this->checkReservationReference($this->generate_string(20));
-            $reservation->total_amount = array_sum(array_column($cart["reservations"],'total_amount'));  
-            $reservation->user_id = auth()->user()->id; 
+            $reservation->total_amount = array_sum(array_column($cart["reservations"],'price'));  
+            $reservation->user_id = auth()->user()->id;
             $reservation->save();
 
             foreach($cart["reservations"] as $service){

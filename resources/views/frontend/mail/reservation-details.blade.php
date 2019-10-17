@@ -17,6 +17,7 @@
 			<p style="font-size: 14px; font-weight: 300;">Service Price : {{ $service->format_price }}</p>
 			<p style="font-size: 14px; font-weight: 300;">Reservation Date : {{ $service->pivot->reservation_date }}</p>
 			<p style="font-size: 14px; font-weight: 300;">Reservation Time : {{ $service->pivot->reservation_time }}</p>
+			<hr>
 		@endforeach
 	@endif
 

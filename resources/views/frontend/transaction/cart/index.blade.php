@@ -57,7 +57,8 @@
                             </tbody>
                             <tfoot> 
                                 <tr>
-                                    <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i></a></td> 
+                                <td>
+                                    <a href="{{ route('frontend.record.branch.index') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i></a></td> 
                                     <td colspan="3" class="hidden-xs"><strong>Total: P{{ number_format( array_sum(array_column($cart["reservations"],'price')), 2,".",",")  }}</strong></td>
                                     
                                 </tr>
