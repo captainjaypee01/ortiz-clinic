@@ -56,5 +56,7 @@
 {!! $productChart->script() !!}
 {!! $orderChart->script() !!}
 {!! $totalOrderChart->script() !!}
+{!! $reservationChart->script() !!}
+{!! $totalReservationChart->script() !!}
 
 @endpush

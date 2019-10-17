@@ -44,6 +44,7 @@ Route::group([
             Route::get('/', [ReservationController::class, 'show'])->name('show');
             Route::get('/edit', [ReservationController::class, 'edit'])->name('edit'); 
             Route::get('mark/{status}', [ReservationController::class, 'mark'])->name('mark')->where(['status' => '[0,1]']); 
+            Route::post('assign/', [ReservationController::class, 'assignEmployee'])->name('assign.employee'); 
             Route::post('approve/', [ReservationController::class, 'approve'])->name('approve'); 
             Route::post('reject/', [ReservationController::class, 'reject'])->name('reject'); 
             Route::patch('/', [ReservationController::class, 'update'])->name('update');

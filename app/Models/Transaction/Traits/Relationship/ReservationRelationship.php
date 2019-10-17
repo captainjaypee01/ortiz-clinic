@@ -3,6 +3,7 @@
 namespace App\Models\Transaction\Traits\Relationship;
 
 use App\Models\Auth\User;
+use App\Models\Record\Room;
 use App\Models\Record\Service;
 
 /**

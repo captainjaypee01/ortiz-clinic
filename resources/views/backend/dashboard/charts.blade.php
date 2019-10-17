@@ -45,3 +45,27 @@
             </div>
         </div>
     </div>
+
+    
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Total Monthly Reservation per Services
+                </div>
+                <div class="card-body">
+                        {!! $totalReservationChart->container() !!}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Reservation Monthly Income
+                </div>
+                <div class="card-body">
+                        {!! $reservationChart->container() !!}
+                </div>
+            </div>
+        </div>
+    </div>

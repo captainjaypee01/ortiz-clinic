@@ -10,6 +10,7 @@ use App\Models\Auth\User;
 use App\Models\Record\Room;
 use App\Models\Record\Service;
 use App\Models\Transaction\Reservation;
+use Illuminate\Database\Eloquent\Collection;
 use Log;
 use Mail;
 
@@ -49,7 +50,12 @@ class ReservationController extends Controller
 
     public function show(Reservation $reservation){ 
         $users = User::role('employee')->get();
-        $rooms = Room::where("branch_id", $reservation->branch_id)->where("status", 1)->get();
+        foreach($reservation->services as $s)
+            $branchIds[] = $s->pivot->branch_id;
+
+            
+        $rooms = Room::whereIn("branch_id", $branchIds)->where("status", 1)->get(); 
+
         return view('backend.transaction.reservation.show',
             [ 
                 "reservation" => $reservation,  
@@ -154,6 +160,40 @@ class ReservationController extends Controller
         Mail::to($user->email)->send(new ReservationPaymentMail($user, $service, $reservation)); 
 
         return redirect()->route('admin.transaction.reservation.show', $reservation)->withFlashSuccess("Reservation Payment Status Rejected and Email Successfully Sent");
+    }
+
+    public function assignEmployee(Reservation $reservation){
+        if(request()->service_id){ 
+            $service = Service::find(request()->service_id);
+
+            $user = User::find($reservation->user_id);
+            $data = new Collection();
+            $data->reservation_date = request('reservation_date');
+            $data->reservation_time = request('reservation_time');
+            $data->room_id = request('room_id');
+            $checkReservation = 0;
+            foreach($reservation->services as $service){
+                if(($service->reservation_date == $data->reservation_date) && ($service->reservation_time == $data->reservation_time) && ($service->room_id == $data->room_id))
+                    $checkReservation++;
+            }
+            if($checkReservation > 0)
+                return redirect()->back()->withFlashWarning("Please assign in another room");
+
+            foreach($reservation->services as $s){ 
+                $reservation->services()->updateExistingPivot( $s, [ 
+                    "branch_id" => $s->pivot->branch_id,
+                    "reservation_date" => request('reservation_date'),
+                    "reservation_time" => request('reservation_time'), 
+                    "duration" => $service->duration, 
+                    "room_id" => $service->id == $s->id ? request('room') : null,
+                    "employee_id" => $service->id == $s->id ? request('employee') : null,
+                ]); 
+            }
+            Mail::to($user->email)->send(new ReservationPaymentMail($user, $service, $reservation)); 
+    
+            return redirect()->back()->withFlashSuccess("Successfully Assigned and Email Successfully Sent");
+        
+        }
     }
 
     function generate_string($strength = 20) {

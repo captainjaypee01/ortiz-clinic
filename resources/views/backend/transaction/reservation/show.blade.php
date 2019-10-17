@@ -21,10 +21,7 @@
                         <a class="nav-link active" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-expanded="true"><i class="fas fa-poll-h"></i> @lang('labels.backend.access.users.tabs.titles.overview')</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#service" role="tab" aria-controls="service" aria-expanded="true"><i class="fas fa-list-alt"></i> Service</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#payment" role="tab" aria-controls="payment" aria-expanded="true"><i class="fas fa-list-alt"></i> Payment</a>
+                        <a class="nav-link" data-toggle="tab" href="#service" role="tab" aria-controls="service" aria-expanded="true"><i class="fas fa-list-alt"></i> Services</a>
                     </li> 
                 </ul>
 
@@ -35,10 +32,7 @@
                     <div class="tab-pane" id="service" role="tabpanel" aria-expanded="true">
                         @include('backend.transaction.reservation.show.tabs.service')
 
-                    </div><!--tab-->
-                    <div class="tab-pane" id="payment" role="tabpanel" aria-expanded="true">
-                        @include('backend.transaction.reservation.show.tabs.payment')
-                    </div><!--tab-->
+                    </div><!--tab--> 
                 </div><!--tab-content-->
             </div><!--col-->
         </div><!--row-->

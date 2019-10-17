@@ -12,18 +12,14 @@
             </tr>
     
             <tr>
-                <th>Reservation Date </th>
-                <td>{{ $reservation->format_reservation_date }}</td>
+                <th>Total Amount </th>
+                <td>{{ $reservation->format_amount }}</td>
             </tr>
-
             <tr>
-                <th>Reservation Time</th>
-                <td>{{ $reservation->format_reservation_time }}</td>
-            </tr> 
-            <tr>
-                <th>Payment Status</th>
-                <td>{!! $reservation->status_payment !!}</td>
-            </tr> 
+                <th>Total Services</th>
+                <td>{{ $reservation->total_services }}</td>
+            </tr>
+   
             <tr>
                 <th>Last Updated At</th>
                 <td>

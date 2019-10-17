@@ -20,7 +20,7 @@
 </section>
 
 <div class="container">
-    <div class="row">
+    <div class="row mb-4">
         <div class="col">
             <div class="card">
                 <div class="card-body">

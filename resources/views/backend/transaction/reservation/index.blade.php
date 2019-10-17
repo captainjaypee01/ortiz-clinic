@@ -39,8 +39,7 @@
                             <th>No.</th>
                             <th>Reference Number</th>
                             <th>Customer Name</th> 
-                            <th>Total Amount</th>
-                            <th>Payment Status</th>
+                            <th>Total Amount</th> 
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -51,8 +50,7 @@
                                 <td>{{  ($reservations->perPage() * $reservations->currentPage() - $reservations->perPage()) + ($loop->iteration) }}</td>
                                 <td>{{ $reservation->reference_number }}</td>
                                 <td>{{ $reservation->user->full_name }}</td> 
-                                <td>{{ $reservation->format_amount }}</td>
-                                <td>{!! $reservation->status_payment !!}</td>
+                                <td>{{ $reservation->format_amount }}</td> 
                                 <td>{!! $reservation->status_label !!}</td>
                                 <td>{!! $reservation->action_buttons !!}</td>
                             </tr>
