@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\Frontend\Transaction\OrderMail;
 use App\Models\Production\Product;
 use App\Models\Transaction\Order;
+use Log;
 use Mail;
 
 class ProductListController extends Controller
@@ -17,7 +18,7 @@ class ProductListController extends Controller
     public function index()
     {
         return view('frontend.production.product.index')
-                ->withProducts(Product::where("status", 1)->orderBy("name", "asc")->paginate(5));
+                ->withProducts(Product::where("status", 1)->orderBy("name", "asc")->paginate(9));
     }
     /**
      * @return \Illuminate\View\View
@@ -25,7 +26,8 @@ class ProductListController extends Controller
     public function show(Product $product)
     {
         return view('frontend.production.product.show')
-                ->withProduct($product);
+                ->withProduct($product)
+                ->withProducts(Product::where("status", 1)->where("id", "<>", $product->id)->orderBy("name", "asc")->paginate(9));
     }
 
 
@@ -66,6 +68,72 @@ class ProductListController extends Controller
         return strtoupper($random_string);
     }
 
+    public function addToCart(Product $product){
+        request()->validate([
+            'quantity' => 'required|numeric|min:1',   
+        ]);
+        if(!$product) abort(404);
+
+        $product->quantity = request('quantity');
+        $product->total_amount = request('quantity') * $product->price;
+        $cart = session()->get('cart'); 
+        if(!$cart){ 
+            if(!isset($cart["products"])){
+                $cart = [
+                    "products" => [
+                        $product->id => $product
+                    ]
+                ];
+                session()->put('cart', $cart);
+                return redirect()->back()->withFlashSuccess('Product added to cart successfully!');
+            }
+            
+        }
+        if(isset($cart["products"][$product->id])){ 
+            $cart["products"][$product->id] = $product;
+            
+            session()->put('cart', $cart);
+            return redirect()->back()->withFlashSuccess('Product added to cart successfully!');
+        }
+
+        $cart["products"][$product->id] = $product;
+        
+        session()->put('cart', $cart);
+        return redirect()->back()->withFlashSuccess('Product added to cart successfully!');
+
+        Log::info($cart);
+        dd($cart);
+    }
+
+    public function removeFromCart(){
+        if(request()->id){
+            $cart = session()->get("cart");
+            if(isset($cart['products'][request()->id])) {
+ 
+                unset($cart['products'][request()->id]);
+ 
+                session()->put('cart', $cart);
+            }
+            if(!(count($cart["products"]) > 0))
+                unset($cart['products']);
+
+            session()->put('cart', $cart);
+            session()->flash('success', 'Product removed successfully');
+        }
+    }
+
+    public function updateFromCart(){
+        if(request()->id){
+            $cart = session()->get("cart");
+            if(isset($cart['products'][request()->id])) {
+ 
+                $cart["products"][request()->id]["quantity"] = request('quantity');  
+                $cart["products"][request()->id]["total_amount"] = $cart["products"][request()->id]["price"] * request('quantity');
+                session()->put('cart', $cart);
+            }
+            session()->flash('success', 'Product updated successfully');
+        }
+    }
     public function checkReference($hash){ 
 
         while( count(Order::where("reference_number", $hash)->get()) > 0){

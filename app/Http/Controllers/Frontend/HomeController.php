@@ -17,7 +17,8 @@ class HomeController extends Controller
     public function index()
     {
         return view('frontend.index')
-            ->withServices(Service::where('status', 1)->orderBy("created_at", "desc")->paginate(3))
-            ->withProducts(Product::where('status', 1)->orderBy("created_at", "desc")->paginate(3));
+            ->withServices(Service::where('status', 1)->orderBy("created_at", "desc")->paginate(9))
+            ->withCarouselProducts(Product::where('status', 1)->orderBy("created_at", "desc")->paginate(3))
+            ->withProducts(Product::where('status', 1)->orderBy("created_at", "desc")->paginate(9));
     }
 }

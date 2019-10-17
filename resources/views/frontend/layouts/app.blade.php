@@ -28,11 +28,16 @@
         <div id="app">
             @include('includes.partials.logged-in-as')
             @include('frontend.includes.nav')
-
-            <div class="container-fluid">
+        
+            @if( !Active::checkRoute('frontend.index') && !Active::checkRoute('frontend.user.dashboard') && (Active::checkUriPattern('branches/') ) )
+                <div class="container-fluid">
+                    @include('includes.partials.messages')
+                    @yield('content')
+                </div><!-- container -->
+            @else
                 @include('includes.partials.messages')
                 @yield('content')
-            </div><!-- container -->
+            @endif  
         </div><!-- #app -->
 
         <!-- Scripts -->

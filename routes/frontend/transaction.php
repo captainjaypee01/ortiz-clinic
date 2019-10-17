@@ -37,4 +37,12 @@ Route::group([
             Route::post('/upload', [ReservationListController::class, 'upload'])->name('upload');  
         });
     });
+
+    Route::group([
+        "prefix" => "cart",
+        "as" => "cart."
+    ], function() {
+        Route::get('/', [ReservationListController::class, 'showCart'])->name('index');
+        Route::post('/checkout', [ReservationListController::class, 'checkout'])->name('checkout');
+    });
 });

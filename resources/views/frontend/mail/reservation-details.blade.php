@@ -8,11 +8,17 @@
 	<p style="font-size: 14px; font-weight: 300;">Thank you for booking our services in Ortiz Skin Clinic.</p>
 	<p style="font-size: 14px; font-weight: 300;">Here's your Details</p>
  
-    <p style="font-size: 14px; font-weight: 300;">Reference Number : {{ $reservation->reference_number }}</p>
-    <p style="font-size: 14px; font-weight: 300;">Service Name : {{ $service->name }}</p>
-    <p style="font-size: 14px; font-weight: 300;">Service Price : {{ $service->format_price }}</p>
-    <p style="font-size: 14px; font-weight: 300;">Reservation Date : {{ $reservation->reservation_date }}</p>
-    <p style="font-size: 14px; font-weight: 300;">Reservation Time : {{ $reservation->start_time }}</p>
+	<p style="font-size: 14px; font-weight: 300;">Reference Number : {{ $reservation->reference_number }}</p>
+	<p style="font-size: 14px; font-weight: 300;">Total Amount : {{ $reservation->total_amount }}</p>
+	
+	@if(count($reservation->services) > 0 )
+		@foreach($reservation->services as $service)
+			<p style="font-size: 14px; font-weight: 300;">Service Name : {{ $service->name }}</p>
+			<p style="font-size: 14px; font-weight: 300;">Service Price : {{ $service->format_price }}</p>
+			<p style="font-size: 14px; font-weight: 300;">Reservation Date : {{ $service->pivot->reservation_date }}</p>
+			<p style="font-size: 14px; font-weight: 300;">Reservation Time : {{ $service->pivot->reservation_time }}</p>
+		@endforeach
+	@endif
 
 	
 	<a href="{{ route('frontend.auth.login') }}" style="font-size: 12px; background: #1e87f0; border: 1px solid transparent; margin: 0; border: none; overflow: visible;color: white; text-transform: none; display: inline-block; box-sizing: border-box; padding: 0 30px; vertical-align: middle; line-height: 38px; text-align: center; text-decoration: none; text-transform: uppercase; -webkit-transition: .1s ease-in-out; transition: .1s ease-in-out; -webkit-transition-property: color,background-color,border-color; transition-property: color,background-color,border-color; margin-top: 20px; border-radius: 3px;">Go To Ortiz Skin Clinic</a>

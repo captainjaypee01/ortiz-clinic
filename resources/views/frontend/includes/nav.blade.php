@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
     <a href="{{ route('frontend.index') }}" class="navbar-brand">{{ app_name() }}</a>
 
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="@lang('labels.general.toggle_navigation')">
@@ -9,17 +9,24 @@
         <ul class="navbar-nav"> 
 
             @auth
-                <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}">@lang('navs.frontend.dashboard')</a></li>
+            
 
             @endauth
 
             <li class="nav-item"><a href="{{route('frontend.record.branch.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.record.branch.index')) }}">Branches</a></li>
-            <li class="nav-item"><a href="{{route('frontend.record.service.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.record.service.index')) }}">Services</a></li>
+            {{-- <li class="nav-item"><a href="{{route('frontend.record.service.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.record.service.index')) }}">Services</a></li> --}}
             <li class="nav-item"><a href="{{route('frontend.production.product.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.production.product.index')) }}">Products</a></li>
             @auth
                 
             <li class="nav-item"><a href="{{route('frontend.transaction.order.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.transaction.order.index')) }}">Orders</a></li>
             <li class="nav-item"><a href="{{route('frontend.transaction.reservation.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.transaction.reservation.index')) }}">Reservations</a></li>
+            <li class="nav-item">
+                <a href="{{route('frontend.transaction.cart.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.transaction.reservation.index')) }}">
+                Cart <span class="badge">
+                    {!! session()->has('cart') ? ( isset(session()->get('cart')["reservations"]) || isset(session()->get('cart')["products"]) ? '<i class="text-success fa fa-check"></i>' : '<i class="text-danger fa fa-trash"></i>') : '<i class="text-danger fa fa-trash"></i>' !!}
+                </span>
+                </a>
+            </li>
             
             @endauth
             @guest

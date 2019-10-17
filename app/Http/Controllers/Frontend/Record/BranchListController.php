@@ -18,4 +18,12 @@ class BranchListController extends Controller
                 ->withBranches(Branch::where("status", 1)->orderBy("name", "asc")->paginate(5));
     }
 
+    public function show(Branch $branch){
+        return view('frontend.record.branch.show',
+            [
+                "branch" => $branch,
+                "services" => $branch->services->all(),
+            ]
+        );
+    }
 }

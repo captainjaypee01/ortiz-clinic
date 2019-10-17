@@ -7,7 +7,7 @@
                     ORDER PRODUCT
                 </div>
                 
-                {{ html()->form('POST', route('frontend.production.product.order', $product))->attribute("enctype","multipart/form-data")->class('form-horizontal')->open() }}
+                {{ html()->form('POST', route('frontend.production.product.cart.add', $product))->attribute("enctype","multipart/form-data")->class('form-horizontal')->open() }}
                 <div class="modal-body">
                     <div class="containerlogin-wrapper"> 
                         <input type="hidden" name="location" value="{{ $product->id }}"> 

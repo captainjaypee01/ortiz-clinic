@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Frontend\Transaction;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller; 
+use App\Mail\Frontend\Transaction\OrderMail;
+use App\Mail\Frontend\Transaction\ReservationMail;
+use App\Models\Transaction\Order;
 use App\Models\Transaction\Reservation;
+use Mail;
 
 class ReservationListController extends Controller
 {
@@ -36,6 +40,59 @@ class ReservationListController extends Controller
                 ->withService($reservation->service);
     }
 
+    public function showCart(){
+        $cart = session()->get('cart'); 
+        // dd($cart);
+        return view('frontend.transaction.cart.index',
+                [
+                    "cart" => $cart,
+                ]
+                );
+    }
+
+    public function checkout(){
+        $cart = session()->get("cart");
+        if(isset($cart["reservations"])){
+            
+            $reservation = new Reservation(); 
+            $reservation->reference_number = $this->checkReservationReference($this->generate_string(20));
+            $reservation->total_amount = array_sum(array_column($cart["reservations"],'total_amount'));  
+            $reservation->user_id = auth()->user()->id; 
+            $reservation->save();
+
+            foreach($cart["reservations"] as $service){
+                $reservation->services()->attach( $service, [
+                                                    "branch_id" => $service->branch_id,
+                                                    "reservation_date" => $service->reservation_date,
+                                                    "reservation_time" => $service->reservation_time, 
+                                                    "duration" => $service->duration, 
+                                                    ]);
+                }
+            
+            $user = auth()->user(); 
+            Mail::to($user->email)->send(new ReservationMail($user, $service, $reservation));
+        }
+        if(isset($cart["products"])){ 
+            $order = new Order();
+            $order->reference_number = $this->checkOrderReference($this->generate_string(20));
+            $order->total_amount = array_sum(array_column($cart["products"],'total_amount'));
+            $order->total_orders = count($cart["products"]);
+            $order->user_id = auth()->user()->id;
+            // dd($order);
+            $order->save();
+
+            foreach($cart["products"] as $product)
+                $order->products()->attach( $product, ["quantity" => $product->quantity]);
+
+            $user = auth()->user(); 
+            Mail::to($user->email)->send(new OrderMail($user, $product, $order, request('quantity')));
+            
+        }
+        
+        unset($cart); 
+        session()->flush();
+        return redirect()->back()->withFlashSuccess('Checked Out Successfully!');
+    }
     public function upload(Reservation $reservation){ 
         request()->validate([
             'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
@@ -49,5 +106,52 @@ class ReservationListController extends Controller
         }
 
         return redirect()->route('frontend.transaction.reservation.show', $reservation)->withFlashWarning("Please re-upload your payment");
+    }
+
+    
+    function generate_string($strength = 20) {
+        $input = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $input_length = strlen($input);
+        $random_string = '';
+        for($i = 0; $i < $strength; $i++) {
+            $random_character = $input[mt_rand(0, $input_length - 1)];
+            $random_string .= $random_character;
+        }
+     
+        return strtoupper($random_string);
+    }
+
+    public function checkOrderReference($hash){ 
+
+        while( count(Order::where("reference_number", $hash)->get()) > 0){
+            $newHash = $this->generate_string(40);
+            $count = Order::where("reference_number", $newHash)->count();
+            if($count > 0)
+                continue;
+            else{
+                return $newHash;
+                break;
+            }
+        }
+
+        return $hash;
+
+    }
+
+    public function checkReservationReference($hash){ 
+
+        while( count(Reservation::where("reference_number", $hash)->get()) > 0){
+            $newHash = $this->generate_string(40);
+            $count = Reservation::where("reference_number", $newHash)->count();
+            if($count > 0)
+                continue;
+            else{
+                return $newHash;
+                break;
+            }
+        }
+
+        return $hash;
+
     }
 }

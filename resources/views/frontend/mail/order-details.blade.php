@@ -8,10 +8,8 @@
 	<p style="font-size: 14px; font-weight: 300;">Thank you for ordering our products in Ortiz Skin Clinic.</p>
 	<p style="font-size: 14px; font-weight: 300;">Here's your Order Details</p>
  
-    <p style="font-size: 14px; font-weight: 300;">Reference Number : {{ $order->reference_number }}</p>
-    <p style="font-size: 14px; font-weight: 300;">Product Name : {{ $product->name }}</p>
-    <p style="font-size: 14px; font-weight: 300;">Product Price : {{ $product->format_price }}</p>
-    <p style="font-size: 14px; font-weight: 300;">Quantity : {{ $product->quantity }}</p>
+    <p style="font-size: 14px; font-weight: 300;">Reference Number : {{ $order->reference_number }}</p> 
+    <p style="font-size: 14px; font-weight: 300;">Total Orders : {{ $order->total_orders }}</p>
     <p style="font-size: 14px; font-weight: 300;">Total Amount : {{ $order->format_amount }}</p>
 
 	

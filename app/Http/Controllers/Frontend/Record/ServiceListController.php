@@ -27,11 +27,15 @@ class ServiceListController extends Controller
     /**
      * @return \Illuminate\View\View
      */
-    public function show(Service $service)
+    public function show(Branch $branch, Service $service)
     {
         $branches = Branch::where('status', 1)->get();
+        // $cart = session()->get('cart'); 
+        // Log::info($cart);
+        // dd($cart);
         return view('frontend.record.service.show')
                 ->withService($service)
+                ->withBranch($branch)
                 ->withBranches($branches);
     }
 
@@ -109,5 +113,87 @@ class ServiceListController extends Controller
         return $hash;
 
     }
+
+    
+    
+    public function addToCart(Branch $branch, Service $service){
+        request()->validate([
+            'reservation_date' => 'required',
+            'reservation_time' => 'required',  
+        ]);
+        if(!$service) abort(404);
+        
+        $service->reservation_date = request('reservation_date');
+        $service->reservation_time = request('reservation_time');
+        $service->branch_id = $branch->id;
+        
+        $dt = new Carbon(request('reservation_time'));
+        $service->format_reservation_time = $dt->format("h:i A");
+
+        $cart = session()->get('cart'); 
+
+        $reservations = Reservation::where("status", 1)->whereDate("reservation_date", request('reservation_date'))->get();
+        $rooms = Room::where("status", 1)->get(); 
+        $ctr = 0;
+        if(count($reservations) > 0){
+            foreach($reservations as $res){ 
+                $time = Carbon::parse($res->reservation_time);
+                $reserveTime = Carbon::parse(request("reservation_time"));
+                $time->addMinutes($res->duration);
+                $reserveTime->addMinutes($service->duration);
+                if($time->gt($reserveTime) && $reserveTime->gt(Carbon::parse($res->reservation_time)))
+                    $ctr++;
+            }
+        }
+        if(count($rooms) <= $ctr)
+            return redirect()->back()->withFlashWarning("There are some conflicts on your selected time. Please change your selected time.");
+        
+        // Log::info($cart);
+        // dd($cart);
+        if(!$cart){ 
+            if(!isset($cart["reservations"])){
+                $cart = [
+                    "reservations" => [
+                        $service->id => $service
+                    ]
+                ];
+                session()->put('cart', $cart);
+                return redirect()->back()->withFlashSuccess('Service added to cart successfully!');
+            }
+            
+        }
+        if(isset($cart["reservations"][$service->id])){ 
+            $cart["reservations"][$service->id] = $service;
+            
+            session()->put('cart', $cart);
+            return redirect()->back()->withFlashSuccess('Service added to cart successfully!');
+        }
+
+        $cart["reservations"][$service->id] = $service;
+        
+        session()->put('cart', $cart);
+        return redirect()->back()->withFlashSuccess('Service added to cart successfully!');
+
+        Log::info($cart);
+        dd($cart);
+    }
+
+    public function removeFromCart(){
+        if(request()->id){
+            $cart = session()->get("cart");
+            if(isset($cart['reservations'][request()->id])) {
+ 
+                unset($cart['reservations'][request()->id]);
+ 
+                session()->put('cart', $cart);
+            }
+            if(!(count($cart["reservations"]) > 0))
+                unset($cart['reservations']);
+
+            session()->put('cart', $cart);
+            session()->flash('success', 'Service removed successfully');
+        }
+    }
+
 
 }

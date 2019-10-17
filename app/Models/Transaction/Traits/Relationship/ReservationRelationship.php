@@ -10,9 +10,9 @@ use App\Models\Record\Service;
  */
 trait ReservationRelationship
 {
-    public function service()
+    public function services()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsToMany(Service::class)->withPivot(['branch_id', 'room_id', 'employee_id', 'reservation_date', 'reservation_time']);
     }
 
     public function user(){

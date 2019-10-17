@@ -13,10 +13,12 @@ Route::group([
         'as' => 'branch.', 
     ], function () {
     
-        Route::get('/', [BranchListController::class, 'index'])->name('index');  
+        Route::get('/', [BranchListController::class, 'index'])->name('index');   
 
         Route::group(['prefix' => '{branch}'], function () {
             Route::get('/', [BranchListController::class, 'show'])->name('show'); 
+            Route::get('service/{service}', [ServiceListController::class, 'show'])->name('service.show'); 
+            Route::post('service/{service}/cart/add', [ServiceListController::class, 'addToCart'])->name('service.cart.add'); 
         });
     });
     
@@ -27,6 +29,7 @@ Route::group([
     ], function () {
     
         Route::get('/', [ServiceListController::class, 'index'])->name('index');  
+        Route::delete('/remove/cart', [ServiceListController::class, 'removeFromCart'])->name('cart.remove'); 
 
         Route::group(['prefix' => '{service}'], function () {
             Route::get('/', [ServiceListController::class, 'show'])->name('show'); 

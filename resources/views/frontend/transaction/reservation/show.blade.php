@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row mb-4">
+    <div class="row mt-4">
         <div class="col">
             <div class="card">
                 <div class="card-header">
@@ -27,16 +27,7 @@
                                         <th>Customer Name</th>
                                         <td>{{ $reservation->user->full_name }}</td>
                                     </tr>
-                         
-                                    <tr>
-                                        <th>Reservation Date </th>
-                                        <td>{{ $reservation->format_reservation_date }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Reservation Time</th>
-                                        <td>{{ $reservation->format_reservation_time }}</td>
-                                    </tr> 
+                          
                                     <tr>
                                         <th>Last Updated At</th>
                                         <td>
@@ -59,34 +50,32 @@
                         <div class="col">
                             <div class="table-responsive">
                                 <table class="table table-hover"> 
-                                    <tr>
-                                        <th>Service Name</th>
-                                        <td>{{ $service->name }}</td>
-                                    </tr>
-                        
-                                    <tr>
-                                        <th>Service Price</th>
-                                        <td>{{ $service->format_price }}</td>
-                                    </tr>
-                            
-                                    <tr>
-                                        <th>Details</th>
-                                        <td>{{ $service->description }}</td>
-                                    </tr>
- 
-                            
+                                    <thead>
+                                        <tr>
+                                            <th>Service Name</th>
+                                            <th>Price</th>
+                                            <th>Duration</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($reservation->services as $service)
+                                        <tr>
+                                            <td>{{ $service->name }}</td>
+                                            <td>{{ $service->format_price }}</td>
+                                            <td>{{ $service->duration ? $service->duration .' minutes' : 'N/A' }}</td>
+                                            <td>{{ $service->pivot->reservation_date }}</td>
+                                            <td>{{ $service->pivot->reservation_time }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>  
                                 </table>
                             </div>
                         </div><!--table-responsive-->\
                     </div>
                     
-                    <hr>
-                    <h3 class="text-title">Payment Details</h3>
-                    <div class="row">
-                        <div class="col">
-                            <img src="{{  $reservation->format_payment_location }}" alt="No image uploaded">
-                        </div>
-                    </div>
+                    <hr> 
                         
                         
                 </div>
@@ -94,13 +83,7 @@
                     <div class="row">
                         <div class="col">
                             <a href="{{route('frontend.transaction.reservation.index')}}" class="btn btn-info btn-sm">Go Back</a>
-                        </div>
-                        <div class="col text-right">
-                            
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#upload-payment-modal">
-                                Upload Payment
-                            </button>
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </div>
