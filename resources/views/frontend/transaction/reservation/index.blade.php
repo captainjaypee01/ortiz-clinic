@@ -44,8 +44,7 @@
                                         <th>Reference Number</th>
                                         <th>Customer Name</th> 
                                         <th>Total Amount</th>
-                                        <th>Payment Status</th>
-                                        <th>Status</th>
+                                        <th>Payment Status</th> 
                                         <th>Reservation Date and Time</th>
                                         <th></th>
                                     </tr>
@@ -56,8 +55,7 @@
                                             <td>{{ $reservation->reference_number }}</td>
                                             <td>{{ $reservation->user->full_name }}</td> 
                                             <td>{{ $reservation->format_amount }}</td>
-                                            <td>{!! $reservation->status_payment !!}</td>
-                                            <td>{!! $reservation->status_label !!}</td>
+                                            <td>{!! $reservation->status_payment !!}</td> 
                                             <td>{!! $reservation->format_reservation_date . ' ' . $reservation->format_reservation_time !!}</td>
                                             <td>
                                                 <a href="{{route('frontend.transaction.reservation.show', $reservation) }}" data-toggle="tooltip" data-placement="top" title="{{__('buttons.general.crud.view')}}" class="btn btn-info"><i class="fas fa-eye"></i></a>

@@ -45,8 +45,7 @@
                                         <th>Customer Name</th>
                                         <th>Total Orders</th>
                                         <th>Total Amount</th>
-                                        <th>Payment Status</th>
-                                        <th>Status</th>
+                                        <th>Payment Status</th> 
                                         <th>Order Date</th>
                                         <th></th>
                                     </tr>
@@ -58,8 +57,7 @@
                                             <td>{{ $order->user->full_name }}</td>
                                             <td>{{ $order->total_orders }}</td>
                                             <td>{{ $order->format_amount }}</td>
-                                            <td>{!! $order->status_payment !!}</td>
-                                            <td>{!! $order->status_label !!}</td>
+                                            <td>{!! $order->status_payment !!}</td> 
                                             <td>{!! $order->created_at !!}</td>
                                             <td>
                                                 <a href="{{route('frontend.transaction.order.show', $order) }}" data-toggle="tooltip" data-placement="top" title="{{__('buttons.general.crud.view')}}" class="btn btn-info"><i class="fas fa-eye"></i></a>

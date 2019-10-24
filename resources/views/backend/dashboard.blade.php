@@ -58,5 +58,7 @@
 {!! $totalOrderChart->script() !!}
 {!! $reservationChart->script() !!}
 {!! $totalReservationChart->script() !!}
+{!! $totalFrequentProductChart->script() !!}
+{!! $totalFrequentServiceChart->script() !!}
 
 @endpush

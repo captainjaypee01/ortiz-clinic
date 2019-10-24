@@ -33,6 +33,7 @@ class DashboardController extends Controller
         $services->total = Service::count();
         $branches->total = Branch::count(); 
  
+        $this->totalFrequentServiceChart();
         return view('backend.dashboard',[
                     "userChart" => $this->userChart(),    
                     "productChart" => $this->productChart(),     
@@ -40,6 +41,8 @@ class DashboardController extends Controller
                     "totalOrderChart" => $this->totalOrderChart(),
                     "reservationChart" => $this->reservationChart(),   
                     "totalReservationChart" => $this->totalReservationChart(),
+                    "totalFrequentProductChart" => $this->totalFrequentProductChart(),
+                    "totalFrequentServiceChart" => $this->totalFrequentServiceChart(),
                 ])
                 ->withUsers($users)
                 ->withProducts($products)
@@ -203,4 +206,51 @@ class DashboardController extends Controller
         return $chart;
     }
 
+    public function totalFrequentProductChart(){ 
+        $data = Product::with('orders')->withCount('orders')->orderBy('orders_count', 'desc')->limit(5)->get(); 
+        $arrayColors = array("rgba(75, 192, 192, 0.5)", 
+                            "rgba(54, 162, 235, 0.5)",
+                            "rgba(201, 203, 207, 0.5)",
+                            "rgba(255, 159, 64, 0.5)",
+                            "rgba(255, 205, 86, 0.5)",
+                            "rgba(255, 99, 132, 0.5)",
+                            "rgba(153, 102, 255, 0.5)",);
+        $labels = array();
+        $dataset = array();
+        $colors = array();
+        foreach($data as $d){
+            array_push($labels, $d->name);
+            array_push($dataset, $d->orders_count);
+            array_push($colors, $arrayColors[rand(0,5)]);
+        }
+        $chart = new DashboardChart;
+        $chart->labels($labels);    
+        $chart->dataset('Most Frequent Product Availed', 'bar', $dataset)->backgroundColor($colors);
+        return $chart;
+        dd($data);
+    }
+
+    public function totalFrequentServiceChart(){ 
+        $data = Service::with('reservations')->withCount('reservations')->orderBy('reservations_count', 'desc')->limit(5)->get(); 
+        $arrayColors = array("rgba(75, 192, 192, 0.5)", 
+                            "rgba(54, 162, 235, 0.5)",
+                            "rgba(201, 203, 207, 0.5)",
+                            "rgba(255, 159, 64, 0.5)",
+                            "rgba(255, 205, 86, 0.5)",
+                            "rgba(255, 99, 132, 0.5)",
+                            "rgba(153, 102, 255, 0.5)",);
+        $labels = array();
+        $dataset = array();
+        $colors = array();
+        foreach($data as $d){
+            array_push($labels, $d->name);
+            array_push($dataset, $d->reservations_count);
+            array_push($colors, $arrayColors[rand(0,5)]);
+        }
+        $chart = new DashboardChart;
+        $chart->labels($labels);    
+        $chart->dataset('Most Frequent Service Availed', 'bar', $dataset)->backgroundColor($colors);
+        return $chart;
+        dd($data);
+    }
 }

@@ -6,24 +6,25 @@
     </button>
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        
+            {{ html()->form('GET', route('frontend.record.symptom.index'))->class('form-inline input-group')->open() }}
+        
+                <select name="symptoms[]" id="symptoms" class="selectpicker form-control" style="width:25%;"multiple="multiple"  data-live-search="true">      
+                    <option value="" class="float-right" selected disabled>Search for symptoms</option>
+                </select> 
+                <div class="input-group-prepend">
+                    
+                    <div class="dropdown-menu">
+
+                    </div>
+                    <button type="submit" class="btn btn-outline-secondary"><i class="fas fa-search"></i></button>  
+                </div> 
+            {{ html()->form()->close() }}
+
         <ul class="navbar-nav"> 
 
 <!-- Search form -->
 
-<form class="form-inline my-2 my-lg-0 input-group ">
-    <div class="input-group-prepend">
-        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div role="separator" class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
-        </div>
-    </div>
-    <input class="form-control mr-sm-2" type="search" placeholder="Search for symptom">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
             @auth
             
 
@@ -37,10 +38,8 @@
             <li class="nav-item"><a href="{{route('frontend.transaction.order.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.transaction.order.index')) }}">Orders</a></li>
             <li class="nav-item"><a href="{{route('frontend.transaction.reservation.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.transaction.reservation.index')) }}">Reservations</a></li>
             <li class="nav-item">
-                <a href="{{route('frontend.transaction.cart.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.transaction.reservation.index')) }}">
-                Cart <span class="badge">
-                    {!! session()->has('cart') ? ( isset(session()->get('cart')["reservations"]) || isset(session()->get('cart')["products"]) ? '<i class="text-success fa fa-check"></i>' : '<i class="text-danger fa fa-trash"></i>') : '<i class="text-danger fa fa-trash"></i>' !!}
-                </span>
+                <a href="{{route('frontend.transaction.cart.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.transaction.reservation.index')) }} {!! session()->has('cart') ? ( isset(session()->get('cart')["reservations"]) || isset(session()->get('cart')["products"]) ? 'text-success' : ' text-warning') : 'text-warning' !!}">
+                Cart 
                 </a>
             </li>
             
@@ -72,3 +71,32 @@
         </ul>
     </div>
 </nav>
+
+
+@push('after-scripts')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(function() {
+        
+        $('#symptoms').selectpicker();
+        $.ajax({
+            url : "{{ route('frontend.record.symptom.all') }}" ,
+            type : "GET",
+            dataType : 'json',
+            success : function(response){
+                if(response.success){
+                    $("#symptoms").html(response.html);  
+                    $('.selectpicker').selectpicker('refresh');  
+                } 
+                console.log(response);
+            },
+            error : function(response){
+                console.log(response);
+            }
+        })
+        $('#symptoms').selectpicker();
+    });
+</script>
+@endpush
+

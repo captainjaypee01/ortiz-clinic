@@ -13,6 +13,10 @@ trait ServiceRelationship
     {
         return $this->belongsToMany(Branch::class);
     }
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class);
+    }
     public function reservation()
     {
         return $this->belongsTo(Reservation::class);

@@ -1,5 +1,28 @@
 
     <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Most Frequent Products availed
+                </div>
+                <div class="card-body">
+                        {!! $totalFrequentProductChart->container() !!}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                        Most Frequent Services availed
+                </div>
+                <div class="card-body">
+                        {!! $totalFrequentServiceChart->container() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
         <div class="col-md-6 col">
             <div class="card">
                 <div class="card-header">
