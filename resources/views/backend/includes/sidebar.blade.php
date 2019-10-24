@@ -42,6 +42,15 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{
+                    active_class(Active::checkUriPattern('admin/record/symptom'))
+                }}" href="{{ route('admin.record.symptom.index') }}">
+                    <i class="nav-icon fas fa-stethoscope"></i>
+                    Symptom
+                </a>
+            </li>
+
             <li class="nav-title">
                 Products
             </li>

@@ -17,7 +17,7 @@
                 <tbody>
                     @foreach($reservation->services as $service)
                     <tr>
-                        <td>{{ $service->name }}</td>
+                    <td>{{ $service->name }} {{ $service->pivot->id }}</td>
                         <td>{{ $service->format_price }}</td>
                         <td>{{ $service->duration ? $service->duration .' minutes' : 'N/A' }}</td>
                         <td>{{ $service->pivot->reservation_date }}</td>

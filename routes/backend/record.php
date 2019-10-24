@@ -3,6 +3,8 @@
 use App\Http\Controllers\Backend\Record\BranchController;
 use App\Http\Controllers\Backend\Record\RoomController;
 use App\Http\Controllers\Backend\Record\ServiceController;
+use App\Http\Controllers\Backend\Record\SymptomController;
+
 Route::group([
     'prefix' => 'record',
     'as' => 'record.',
@@ -66,6 +68,25 @@ Route::group([
             Route::patch('/branch', [ServiceController::class, 'store_branch'])->name('store_branch');
             Route::patch('/', [ServiceController::class, 'update'])->name('update');
             Route::delete('/', [ServiceController::class, 'destroy'])->name('destroy');
+        });
+    });
+
+    // Symptom Routes
+    Route::group([
+        'prefix' => 'symptom',
+        'as' => 'symptom.', 
+    ], function () {
+    
+        Route::get('/', [SymptomController::class, 'index'])->name('index'); 
+        Route::get('/create', [SymptomController::class, 'create'])->name('create');
+        Route::post('/', [SymptomController::class, 'store'])->name('store');
+
+        Route::group(['prefix' => '{symptom}'], function () {
+            Route::get('/', [SymptomController::class, 'show'])->name('show');
+            Route::get('/edit', [SymptomController::class, 'edit'])->name('edit'); 
+            Route::get('mark/{status}', [SymptomController::class, 'mark'])->name('mark')->where(['status' => '[0,1]']); 
+            Route::patch('/', [SymptomController::class, 'update'])->name('update');
+            Route::delete('/', [SymptomController::class, 'destroy'])->name('destroy');
         });
     });
 

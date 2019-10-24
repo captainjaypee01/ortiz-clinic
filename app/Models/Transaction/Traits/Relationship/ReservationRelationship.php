@@ -13,7 +13,7 @@ trait ReservationRelationship
 {
     public function services()
     {
-        return $this->belongsToMany(Service::class)->withPivot(['branch_id', 'room_id', 'employee_id', 'reservation_date', 'reservation_time']);
+        return $this->belongsToMany(Service::class)->withPivot(['id','branch_id', 'room_id', 'employee_id', 'reservation_date', 'reservation_time']);
     }
 
     public function user(){
