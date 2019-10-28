@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Record\Symptom;
 use DB;
+use Log;
 
 class SymptomListController extends Controller
 {
@@ -20,10 +21,10 @@ class SymptomListController extends Controller
             $symptoms = $symptoms->WhereIn("id", $search);
              
         }
-        $symptoms = $symptoms->with('services')->get();
+        $symptoms = $symptoms->with(['services.branches'])->withCount('services')->get();
         $totalServices = 0;
-        foreach($symptoms as $s) $totalServices += ($s->services) ? count($s->services) : 0;
-
+        foreach($symptoms as $s) $totalServices += ($s->services) ? $s->services_count : 0;
+ 
         return view('frontend.record.symptom.index', 
                     [
                         "symptoms" => $symptoms,
