@@ -3,7 +3,8 @@
 @section('title', app_name() . ' | ' . __('labels.frontend.auth.register_box_title'))
 
 @section('content')
-    <div class="row justify-content-center align-items-center">
+<div class="container">
+    <div class="row mt-4 justify-content-center align-items-center">
         <div class="col col-sm-8 align-self-center">
             <div class="card">
                 <div class="card-header">
@@ -110,6 +111,7 @@
             </div><!-- card -->
         </div><!-- col-md-8 -->
     </div><!-- row -->
+</div>
 @endsection
 
 @push('after-scripts')

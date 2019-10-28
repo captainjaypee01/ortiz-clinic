@@ -14,7 +14,7 @@ Route::group([
         'as' => 'branch.', 
     ], function () {
     
-        Route::get('/', [BranchListController::class, 'index'])->name('index');   
+        Route::get('/', [BranchListController::class, 'index'])->name('index'); 
 
         Route::group(['prefix' => '{branch}'], function () {
             Route::get('/', [BranchListController::class, 'show'])->name('show'); 
