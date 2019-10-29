@@ -12,6 +12,7 @@ trait ProductAttribute
     } 
     
     public function getFormatImageLocationAttribute(){
+        return $this->image_location ? url('uploads') . '/' . $this->image_location : asset('img/frontend/ortiz-clinic-logo.png');
         return $this->image_location ? 'https://storage.cloud.google.com/ortiz_clinic/' . $this->image_location : asset('img/frontend/ortiz-clinic-logo.png');
     }
 

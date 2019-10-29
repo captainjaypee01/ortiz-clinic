@@ -40,11 +40,12 @@ class OrderListController extends Controller
     public function upload(Order $order){
         Log::info(request());
         request()->validate([
-            'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
+            'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:512', 
         ]);
         if(request()->hasFile('upload_file')){
             $file = request()->upload_file;
-            $location = $file->store("uploads/order", 'gcs');  
+            // $location = $file->store("uploads/order", 'gcs');  
+            $location = $file->store("order"); 
             $order->payment_location = $location;
             $order->save();
             return redirect()->route('frontend.transaction.order.show', $order)->withFlashSuccess("Payment Upload Successfully");

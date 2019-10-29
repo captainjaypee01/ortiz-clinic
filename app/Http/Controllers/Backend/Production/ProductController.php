@@ -107,11 +107,12 @@ class ProductController extends Controller
 
         if(request()->hasFile('upload_file')){ 
             request()->validate([ 
-                'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',  
+                'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:512', 
             ]);
              // Upload the file and put it to 'uploads' folder
              $file = request()->file('upload_file');
-             $location = $file->store("uploads/product", 'gcs');  
+             $location = $file->store("product"); 
+            //  $location = $file->store("uploads/product", 'gcs');  
              $product->image_location = $location; 
                
         }

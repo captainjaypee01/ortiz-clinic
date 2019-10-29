@@ -96,11 +96,12 @@ class ReservationListController extends Controller
     }
     public function upload(Reservation $reservation){ 
         request()->validate([
-            'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
+            'upload_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:512', 
         ]);
         if(request()->hasFile('upload_file')){
             $file = request()->upload_file;
-            $location = $file->store("uploads/reservation", 'gcs');  
+            // $location = $file->store("uploads/reservation", 'gcs'); 
+            $location = $file->store("reservation");  
             $reservation->payment_location = $location;
             $reservation->save();
             return redirect()->route('frontend.transaction.reservation.show', $reservation)->withFlashSuccess("Payment Upload Successfully");
