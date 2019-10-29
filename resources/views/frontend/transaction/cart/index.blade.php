@@ -191,7 +191,7 @@
                         <div class="row mt-4">
                             <div class="col text-right">
                                 {{ html()->form('POST', route('frontend.transaction.cart.checkout'))->attribute("enctype","multipart/form-data")->class('form-horizontal')->open() }}
-                                {{ form_submit("Checkout")->id('btn-checkout') }} <i id="checkout-loading" style="display:none;" class="fas fa-sync fa-spin"></i>
+                                {{ form_submit("Confirm")->id('btn-checkout') }} <i id="checkout-loading" style="display:none;" class="fas fa-sync fa-spin"></i>
                                 {{ html()->form()->close() }}
                             </div>
                         </div>
