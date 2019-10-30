@@ -8,7 +8,7 @@
 
             <tr>
                 <th>Customer Name</th>
-                <td>{{ $order->user->full_name }}</td>
+                <td>{{ $order->user ? $order->user->full_name : 'N/A' }}</td> 
             </tr>
 
             <tr>

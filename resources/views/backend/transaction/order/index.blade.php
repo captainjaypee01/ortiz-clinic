@@ -51,7 +51,7 @@
                             <tr>
                                 <td>{{  ($orders->perPage() * $orders->currentPage() - $orders->perPage()) + ($loop->iteration) }}</td>
                                 <td>{{ $order->reference_number }}</td>
-                                <td>{{ $order->user->full_name }}</td>
+                                <td>{{ $order->user ? $order->user->full_name : 'N/A' }}</td> 
                                 <td>{{ $order->total_orders }}</td>
                                 <td>{{ $order->format_amount }}</td>
                                 <td>{!! $order->status_payment !!}</td>

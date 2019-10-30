@@ -49,7 +49,7 @@
                             <tr>
                                 <td>{{  ($reservations->perPage() * $reservations->currentPage() - $reservations->perPage()) + ($loop->iteration) }}</td>
                                 <td>{{ $reservation->reference_number }}</td>
-                                <td>{{ $reservation->user->full_name }}</td> 
+                                <td>{{ $reservation->user ? $reservation->user->full_name : 'N/A' }}</td> 
                                 <td>{{ $reservation->format_amount }}</td> 
                                 <td>{!! $reservation->status_label !!}</td>
                                 <td>{!! $reservation->action_buttons !!}</td>
