@@ -77,8 +77,8 @@ class BranchController extends Controller
             'name' => 'required', 
             'contact_number' => 'required', 
             'province' => 'required', 
-            'city' => 'required', 
-            'address_line_1' => 'required', 
+            'city' => 'required',  
+            'address' => 'required',
         ]);
 
         if(isset($form['name']))
@@ -105,6 +105,14 @@ class BranchController extends Controller
         if(isset($form['address_line_1']))
             $branch->address_line_1 = $form["address_line_1"];
             
+        if(isset($form['lat']))
+            $branch->lat = $form["lat"];
+
+        if(isset($form['lng']))
+            $branch->lng = $form["lng"];
+
+        if(isset($form['address']))
+            $branch->address = $form["address"];
 
         $branch->save();
         

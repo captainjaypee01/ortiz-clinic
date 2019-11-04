@@ -41,11 +41,38 @@
             @endif  
         </div><!-- #app -->
 
+        <div id="demo"></div>
         <!-- Scripts -->
         @stack('before-scripts')
         {!! script(mix('js/manifest.js')) !!}
         {!! script(mix('js/vendor.js')) !!}
         {!! script(mix('js/frontend.js')) !!}
+        <script>
+                var x = document.getElementById("demo");
+                function getLocation() {
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                  } else {
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                  }
+                }
+                
+                function showPosition(position) {
+                    $.ajax({
+                        url : '{{ route("frontend.location.set") }}' + "?lat="+position.coords.latitude+ "&lng=" +position.coords.longitude,
+                        method : 'get',
+                        success:function(response){
+                            console.log(response);
+                        },
+                        error:function(response){
+                            console.log(response);
+                        }
+                    })
+                //   x.innerHTML = "Latitude: " + position.coords.latitude +
+                //   "<br>Longitude: " + position.coords.longitude;
+                }
+                getLocation();
+        </script>
         @stack('after-scripts')
 
         @include('includes.partials.ga')

@@ -31,6 +31,9 @@ class Branch extends Model
         'province',
         'country',
         'address_line_1',
+        'lat',
+        'lng',
+        'address',
         'status', 
     ];
 }

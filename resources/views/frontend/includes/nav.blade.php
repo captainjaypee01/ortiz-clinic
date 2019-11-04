@@ -30,7 +30,8 @@
 
             @endauth
 
-            <li class="nav-item"><a href="{{route('frontend.record.branch.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.record.branch.index')) }}">Branches</a></li> 
+            <li class="nav-item"><a href="{{route('frontend.nearest')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.nearest')) }}">Nearest</a></li> 
+            <li class="nav-item"><a href="{{route('frontend.record.branch.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.record.branch.index')) }}">Branches</a></li>  
             <li class="nav-item"><a href="{{route('frontend.production.product.index')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.production.product.index')) }}">Products</a></li>
             @auth
 

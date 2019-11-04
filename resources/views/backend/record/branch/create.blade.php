@@ -42,20 +42,22 @@
             </div>
 
             <div class="row">
-                <div class="col-md-8 col-sm-12">
+                <div class="col">
                     <div class="form-group">
-                        {{ html()->label("Address Line 1")->for('address_line_1') }}
-                        <input type="text" name="address_line_1" id="address_line_1" placeholder="Address Line 1" class="form-control" required>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <div class="form-group">
-                        {{ html()->label("Barangay")->for('barangay') }}
-                        <input type="text" name="barangay" id="barangay" placeholder="Barangay" class="form-control" required>
+                        {{ html()->label("Address")->for('address') }}
+                        <input type="text" name="address" id="autocomplete" placeholder="Address" class="form-control" required>
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <input type="hidden" id="lat" name="lat">
+                        <input type="hidden" id="lng" name="lng">
+                    </div>
+                </div>
+            </div> 
+            
             <div class="row">
                 <div class="col-md-4 col-sm-12">
                     <div class="form-group">
@@ -101,3 +103,20 @@
     </div><!--card-->
 {{ html()->form()->close() }}
 @endsection
+
+@push('after-scripts')
+<script>
+    function initMap(){
+        var input = document.getElementById('autocomplete');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        google.maps.event.addListener(autocomplete, 'place_changed', function() { 
+            var place = autocomplete.getPlace();
+            $("#lat").val(place.geometry.location.lat);
+            $("#lng").val(place.geometry.location.lng); 
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNsrC4lgCajNPslsFF7c68Y87sn00i3zQ&libraries=places,geometry&callback=initMap"
+async defer></script>
+ 
+@endpush

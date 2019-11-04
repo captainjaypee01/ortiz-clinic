@@ -51,7 +51,7 @@
                                 <td>{{  ($branches->perPage() * $branches->currentPage() - $branches->perPage()) + ($loop->iteration) }}</td>
                                 <td>{{ $branch->name }}</td>
                                 <td>{{ $branch->contact_number . ' | ' . $branch->tel_number }}</td>
-                                <td><p>{{ $branch->sub_address }}</p></td>
+                                <td><p>{{ $branch->address }}</p></td>
                                 <td>{!! $branch->status_label !!}</td>
                                 <td>{!! $branch->action_buttons !!}</td>
                             </tr>
