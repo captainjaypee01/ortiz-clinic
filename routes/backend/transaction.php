@@ -2,6 +2,7 @@
  
 use App\Http\Controllers\Backend\Transaction\OrderController;
 use App\Http\Controllers\Backend\Transaction\ReservationController;
+use App\Http\Controllers\Backend\Transaction\TransactionController;
 
 Route::group([
     'prefix' => 'transaction',
@@ -53,4 +54,22 @@ Route::group([
     });
 
 
+    // Transaction Routes
+    Route::group([
+        'prefix' => 'transaction',
+        'as' => 'transaction.', 
+    ], function () {
+    
+        Route::get('/', [TransactionController::class, 'index'])->name('index'); 
+        Route::get('/create', [TransactionController::class, 'create'])->name('create');
+        Route::post('/', [TransactionController::class, 'store'])->name('store');
+
+        Route::group(['prefix' => '{transaction}'], function () {
+            Route::get('/', [TransactionController::class, 'show'])->name('show');
+            Route::get('/edit', [TransactionController::class, 'edit'])->name('edit');
+            Route::get('mark/{status}', [TransactionController::class, 'mark'])->name('mark')->where(['status' => '[0,1]']); 
+            Route::patch('/', [TransactionController::class, 'update'])->name('update');
+            Route::delete('/', [TransactionController::class, 'destroy'])->name('destroy');
+        });
+    });
 });

@@ -6,6 +6,7 @@ use App\Models\Auth\SocialAccount;
 use App\Models\Auth\PasswordHistory;
 use App\Models\Transaction\Order;
 use App\Models\Transaction\Reservation;
+use App\Models\Transaction\Transaction;
 
 /**
  * Class UserRelationship.
@@ -35,5 +36,9 @@ trait UserRelationship
     public function reservations()
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
     }
 }

@@ -78,6 +78,15 @@
 
             <li class="nav-item">
                 <a class="nav-link {{
+                    active_class(Active::checkUriPattern('admin/transaction/transaction'))
+                }}" href="{{ route('admin.transaction.transaction.index') }}">
+                    <i class="nav-icon fas fa-history"></i>
+                    Transactions
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{
                     active_class(Active::checkUriPattern('admin/transaction/reservation'))
                 }}" href="{{ route('admin.transaction.reservation.index') }}">
                     <i class="nav-icon fas fa-book"></i>

@@ -8,6 +8,7 @@ use App\Mail\Frontend\Transaction\OrderMail;
 use App\Mail\Frontend\Transaction\ReservationMail;
 use App\Models\Transaction\Order;
 use App\Models\Transaction\Reservation;
+use App\Models\Transaction\Transaction;
 use Mail;
 
 class ReservationListController extends Controller
@@ -52,10 +53,15 @@ class ReservationListController extends Controller
 
     public function checkout(){
         $cart = session()->get("cart");
+        $transaction = new Transaction();
+        $transaction->reference_number = $this->checkReference($this->generate_string(20));
+        $transaction->user_id = auth()->user()->id; 
+        $transaction->save();
         if(isset($cart["reservations"])){
             
             $reservation = new Reservation(); 
-            $reservation->reference_number = $this->checkReservationReference($this->generate_string(20));
+            $reservation->transaction_id = $transaction->id;
+            $reservation->reference_number = $transaction->reference_number;
             $reservation->total_amount = array_sum(array_column($cart["reservations"],'price'));  
             $reservation->total_services = count($cart["reservations"]);
             $reservation->user_id = auth()->user()->id;
@@ -69,13 +75,16 @@ class ReservationListController extends Controller
                                                     "duration" => $service->duration, 
                                                     ]);
                 }
-            
+            $transaction->total_services = count($cart["reservations"]);
+            $transaction->total_amount += $reservation->total_amount;
             $user = auth()->user(); 
             Mail::to($user->email)->send(new ReservationMail($user, $service, $reservation));
+
         }
         if(isset($cart["products"])){ 
             $order = new Order();
-            $order->reference_number = $this->checkOrderReference($this->generate_string(20));
+            $order->transaction_id = $transaction->id;
+            $order->reference_number = $transaction->reference_number;
             $order->total_amount = array_sum(array_column($cart["products"],'total_amount'));
             $order->total_orders = count($cart["products"]);
             $order->user_id = auth()->user()->id;
@@ -85,11 +94,14 @@ class ReservationListController extends Controller
             foreach($cart["products"] as $product)
                 $order->products()->attach( $product, ["quantity" => $product->quantity]);
 
+
+            $transaction->total_products = count($cart["products"]);
+            $transaction->total_amount += $order->total_amount;
             $user = auth()->user(); 
             Mail::to($user->email)->send(new OrderMail($user, $product, $order, request('quantity')));
             
         }
-        
+        $transaction->save();
         unset($cart); 
         session()->flush();
         return redirect()->back()->withFlashSuccess('Checked Out Successfully!');
@@ -134,10 +146,8 @@ class ReservationListController extends Controller
                 return $newHash;
                 break;
             }
-        }
-
-        return $hash;
-
+        } 
+        return $hash; 
     }
 
     public function checkReservationReference($hash){ 
@@ -151,9 +161,21 @@ class ReservationListController extends Controller
                 return $newHash;
                 break;
             }
-        }
+        } 
+        return $hash; 
+    }
 
-        return $hash;
-
+    public function checkReference($hash){
+        while( count(Transaction::where("reference_number", $hash)->get()) > 0){
+            $newHash = $this->generate_string(40);
+            $count = Transaction::where("reference_number", $newHash)->count();
+            if($count > 0)
+                continue;
+            else{
+                return $newHash;
+                break;
+            }
+        } 
+        return $hash; 
     }
 }
