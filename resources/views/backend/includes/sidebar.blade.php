@@ -52,7 +52,7 @@
             </li>
 
             <li class="nav-title">
-                Products
+                Inventory
             </li>
 
             <li class="nav-item">

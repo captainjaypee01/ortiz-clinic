@@ -32,13 +32,13 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 col-sm-12">
+                <div class="col-md-4 col-sm-12">
                     <div class="form-group">
                         {{ html()->label("Price")->for('price') }}
                         <input type="number" name="price" id="price" value="{{ $product->price }}" class="form-control" required>
                     </div>
                 </div> 
-                <div class="col-md-6 col-sm-12">
+                <div class="col-md-4 col-sm-12">
                     <div class="form-group">
                         {{ html()->label("Unit")->for('unit') }}
                         {{ html()->text('unit')
@@ -46,6 +46,12 @@
                                 ->placeholder('Unit')
                                 ->attribute('maxlength', 191)
                                 ->required() }} 
+                    </div>
+                </div> 
+                <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                        {{ html()->label("Quantity")->for('quantity') }}
+                        <input type="number" name="quantity" id="quantity" class="form-control" value="{{ $product->quantity }}"  required>
                     </div>
                 </div> 
             </div>

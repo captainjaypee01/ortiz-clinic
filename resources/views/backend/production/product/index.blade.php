@@ -40,6 +40,7 @@
                             <th>Name</th>
                             <th>Price</th> 
                             <th>Unit</th>
+                            <th>Quantity</th>
                             <th>Categories</th>
                             <th>Status</th>
                             <th>Date Created</th>
@@ -53,6 +54,7 @@
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->format_price }}</td>
                                 <td>{{ $product->unit ? $product->unit : 'N/A' }}</td>
+                                <td>{{ $product->quantity }}</td>
                                 <td>
                                     @if(count($product->categories) > 0)
                                         @foreach($product->categories as $category)
@@ -97,5 +99,18 @@
     </div><!--card-body-->
 </div><!--card-->
  
+@include('backend.production.product.includes.modals.add-quantity-modal')
 @endsection
 
+@push('after-scripts')
+
+<script>
+
+    $(".btn-quantity").click(function(){
+        var product = $(this).data('id');
+        $("#product").val(product);
+    });
+
+</script>
+
+@endpush

@@ -32,12 +32,14 @@ class TransactionController extends Controller
     }
 
     public function show(Transaction $transaction){
-        
+        $rooms = null;
         $users = User::role('employee')->get();
-        foreach($transaction->reservation->services as $s)
-            $branchIds[] = $s->pivot->branch_id;
- 
-        $rooms = Room::whereIn("branch_id", $branchIds)->where("status", 1)->get(); 
+        if($transaction->reservation){
+            foreach($transaction->reservation->services as $s)
+                $branchIds[] = $s->pivot->branch_id;
+
+            $rooms = Room::whereIn("branch_id", $branchIds)->where("status", 1)->get(); 
+        }
         
         return view('backend.transaction.transaction.show',
             [ 

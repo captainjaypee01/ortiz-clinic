@@ -9,6 +9,7 @@
     <div class="container">
         <h1 class="jumbotron-heading">{{ $product->name }}</h1>
         <p class="lead text-muted">{{ $product->format_price }}</p> 
+        <p class="lead text-muted">{{ $product->quantity }} pcs</p> 
         <p class="lead text-muted">{{ $product->description }}</p> 
         <button type="button" class="btn btn-secondary btn-sm mb-4" data-toggle="modal" data-target="#order-product-modal">
             Order Product

@@ -19,7 +19,7 @@ trait TransactionAttribute
     /**
      * @return string
      */
-    public function getFormatOrderDateAttribute(){
+    public function getFormatTransactionDateAttribute(){
         $dt = new Carbon($this->created_at);
         return $dt->format("F d, Y");
     }

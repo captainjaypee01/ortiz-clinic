@@ -53,8 +53,8 @@
                                 <td>{{ $transaction->reference_number }}</td>
                                 <td>{{ $transaction->user ? $transaction->user->full_name : 'N/A' }}</td> 
                                 <td>{{ $transaction->format_amount }}</td>
-                                <td>{{ $transaction->total_services }}</td> 
-                                <td>{{ $transaction->total_products }}</td>  
+                                <td>{{ $transaction->total_services > 0 ? $transaction->total_services : 0 }}</td> 
+                                <td>{{ $transaction->total_products > 0 ? $transaction->total_products : 0 }}</td>  
                                 <td>{!! $transaction->status_label !!}</td>
                                 <td>{!! $transaction->action_buttons !!}</td>
                             </tr>

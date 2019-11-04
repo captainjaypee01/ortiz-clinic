@@ -49,7 +49,7 @@
     </div><!--table-responsive-->
 </div>
 
-<div class="row">
+<div class="row mt-2">
     <div class="col">
         <div class="card">
             <div class="card-header">

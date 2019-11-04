@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Frontend\Transaction\OrderListController;
 use App\Http\Controllers\Frontend\Transaction\ReservationListController;
+use App\Http\Controllers\Frontend\Transaction\TransactionListController;
 
 Route::group([ 
     'as' => 'transaction.',
@@ -45,4 +46,21 @@ Route::group([
         Route::get('/', [ReservationListController::class, 'showCart'])->name('index');
         Route::post('/checkout', [ReservationListController::class, 'checkout'])->name('checkout');
     });
+
+    
+    // Branches List Routes
+    Route::group([
+        'prefix' => 'transaction',
+        'as' => 'transaction.', 
+    ], function () {
+    
+        Route::get('/', [TransactionListController::class, 'index'])->name('index');  
+
+        Route::group(['prefix' => '{transaction}',
+        'middleware' => ['auth', 'password_expires'],], function () {
+            Route::get('/', [TransactionListController::class, 'show'])->name('show');  
+            Route::post('/upload', [TransactionListController::class, 'upload'])->name('upload');  
+        });
+    });
+
 });

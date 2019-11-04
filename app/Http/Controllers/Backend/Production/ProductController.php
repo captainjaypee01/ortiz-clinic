@@ -103,6 +103,9 @@ class ProductController extends Controller
         if(isset($form['unit']))
             $product->unit = $form["unit"];
  
+        if(isset($form['quantity']))
+            $product->quantity = $form["quantity"];
+
         $product->user_id = auth()->user()->id;
 
         if(request()->hasFile('upload_file')){ 
@@ -143,6 +146,14 @@ class ProductController extends Controller
 
     public function getProvinces(){
         return DB::select("select * from provinces where status = 1");
+    }
+
+    public function addQuantity(){
+        $productId = request('product');
+        $product = Product::find($productId);
+        $product->quantity += request('quantity');
+        $product->save();
+        return redirect()->back()->withFlashSuccess('Product Quantity Added Successfully!');
     }
 
 }

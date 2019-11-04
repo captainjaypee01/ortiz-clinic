@@ -228,6 +228,7 @@
             },
             error:function(response){
                 console.log(response);
+                window.location.reload();
             }
         });
     });

@@ -42,7 +42,7 @@
         </div><!--table-responsive-->
     </div>
     @if(count($reservation->services) > 0)
-    <div class="row"> 
+    <div class="row mt-2"> 
         <div class="col"> 
             <div class="card">
                 <div class="card-header">
@@ -57,8 +57,7 @@
                                     <th>Price</th>
                                     <th>Duration</th>
                                     <th>Date</th>
-                                    <th>Time</th>
-                                    <th></th>
+                                    <th>Time</th> 
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,10 +67,7 @@
                                     <td>{{ $service->format_price }}</td>
                                     <td>{{ $service->duration ? $service->duration .' minutes' : 'N/A' }}</td>
                                     <td>{{ $service->pivot->reservation_date }}</td>
-                                    <td>{{ $service->pivot->reservation_time }}</td>
-                                    <td>
-                                    <button class="btn btn-info btn-sm btn-assign" data-toggle="modal" data-target="#assign-employee-modal" data-date="{{ $service->pivot->reservation_date }}" data-time="{{ $service->pivot->reservation_time }}" data-id="{{ $service->id }}">Assign</button>
-                                    </td>
+                                    <td>{{ $service->pivot->reservation_time }}</td> 
                                 </tr>
                                 @endforeach
                             </tbody>  
@@ -82,8 +78,7 @@
         </div>
     </div><!--table-responsive--> 
     @endif
-
-    @include('backend.transaction.reservation.includes.modals.assign-employee-modal')
+ 
         
     @push('after-scripts')
 

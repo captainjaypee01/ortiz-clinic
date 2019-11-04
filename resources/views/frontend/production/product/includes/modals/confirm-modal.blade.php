@@ -10,7 +10,7 @@
                 {{ html()->form('POST', route('frontend.production.product.cart.add', $product))->attribute("enctype","multipart/form-data")->class('form-horizontal')->open() }}
                 <div class="modal-body">
                     <div class="containerlogin-wrapper"> 
-                        <input type="hidden" name="location" value="{{ $product->id }}"> 
+                        <input type="hidden" name="product" value="{{ $product->id }}"> 
                         <div class="row"> 
                             <label class="col-sm-2 col-form-label"for="">Quantity</label> 
                             <div class="col"> 

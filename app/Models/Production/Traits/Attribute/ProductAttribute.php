@@ -32,6 +32,10 @@ trait ProductAttribute
         return '<a href="'.route('admin.production.product.edit', $this).'" class="btn btn-primary"><i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="'.__('buttons.general.crud.edit').'"></i></a>';
     }
 
+    public function getQuantityButtonAttribute(){
+        return '<button class="dropdown-item btn-quantity" data-toggle="modal" data-target="#add-quantity-modal" data-id="'. $this->id .'">Add Quantity</button>';
+    }
+
     /**
      * @return string
      */
@@ -73,7 +77,7 @@ trait ProductAttribute
 			  '.__('labels.general.more').'
 			</button>
 			<div class="dropdown-menu" aria-labelledby="userActions">
-            '.$this->assign_button.'
+            '.$this->quantity_button.'
             '.$this->delete_button.'
             '.$this->status_button.'
 			</div>
