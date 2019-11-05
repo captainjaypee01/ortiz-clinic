@@ -51,13 +51,15 @@
                 var x = document.getElementById("demo");
                 function getLocation() {
                     console.log(navigator.geolocation);
+                    @if(  session()->has('currentLocation') )
+                        console.log('meron');
+                    @else
+                        navigator.geolocation.getCurrentPosition(showPosition)
+                    @endif 
                     if (navigator.geolocation) {
+                        console.log('meron geolocation');
                         navigator.geolocation.getCurrentPosition(showPosition); 
-                        @if(  session()->has('currentLocation') )
-                            console.log('meron');
-                        @else
-                            navigator.geolocation.getCurrentPosition(showPosition)
-                        @endif 
+                       
                     } else {
                         x.innerHTML = "Geolocation is not supported by this browser.";
                     }
