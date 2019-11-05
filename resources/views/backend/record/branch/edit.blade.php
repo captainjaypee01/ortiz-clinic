@@ -71,6 +71,27 @@
             
 
             <div class="row">
+                <div class="col-md-8 col-sm-12">
+                    <div class="form-group">
+                        {{ html()->label("Address Line 1")->for('address_line_1') }}
+                        {{ html()->text('address_line_1')
+                                ->class('form-control')
+                                ->placeholder('Address Line 1') 
+                                ->required() }}  
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="form-group">
+                        {{ html()->label("Barangay")->for('barangay') }}
+                        {{ html()->text('barangay')
+                                ->class('form-control')
+                                ->placeholder('Barangay') 
+                                ->required() }}   
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
                 <div class="col-md-4 col-sm-12">
                     <div class="form-group">
                         {{ html()->label("City/Muncipality")->for('city') }}

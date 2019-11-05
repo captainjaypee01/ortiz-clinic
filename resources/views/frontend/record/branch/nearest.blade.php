@@ -24,7 +24,7 @@
                         </div>
                         <div class="card-body">
                             <h3 class="text-title">{{ $branch['branch']->name }} </h3>
-                            <p>{{ $branch['branch']->address }}</p>
+                            <p>{{ $branch['branch']->sub_address }}</p>
                             <p>{{ $branch['branch']->contact_number . ' | ' . $branch['branch']->tel_number }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
