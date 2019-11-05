@@ -54,11 +54,11 @@
                     @if(  session()->has('currentLocation') )
                         console.log('meron');
                     @else
-                        navigator.geolocation.getCurrentPosition(showPosition)
+                        navigator.geolocation.watchPosition(showPosition)
                     @endif 
                     if (navigator.geolocation) {
                         console.log('meron geolocation');
-                        navigator.geolocation.getCurrentPosition(showPosition); 
+                        navigator.geolocation.watchPosition(showPosition); 
                        
                     } else {
                         x.innerHTML = "Geolocation is not supported by this browser.";
@@ -76,9 +76,7 @@
                         error:function(response){
                             console.log(response);
                         }
-                    })
-                //   x.innerHTML = "Latitude: " + position.coords.latitude +
-                //   "<br>Longitude: " + position.coords.longitude;
+                    });
                 }
                 getLocation();
         </script>
