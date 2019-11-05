@@ -52,17 +52,19 @@
                 function getLocation() {
                     console.log(navigator.geolocation);
                     if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(showPosition);
+                        navigator.geolocation.getCurrentPosition(showPosition); 
                         @if(  session()->has('currentLocation') )
                             console.log('meron');
-                        @endif
-                        console.log('test');
+                        @else
+                            navigator.geolocation.getCurrentPosition(showPosition)
+                        @endif 
                     } else {
                         x.innerHTML = "Geolocation is not supported by this browser.";
                     }
                 }
                 
                 function showPosition(position) {
+                    console.log(position);
                     $.ajax({
                         url : '{{ route("frontend.location.set") }}' + "?lat="+position.coords.latitude+ "&lng=" +position.coords.longitude,
                         method : 'get',
