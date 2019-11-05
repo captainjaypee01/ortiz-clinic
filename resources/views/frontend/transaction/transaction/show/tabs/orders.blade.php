@@ -48,7 +48,7 @@
         </div>
     </div><!--table-responsive-->
 </div>
-
+@include('frontend.transaction.order.includes.modals.upload-payment-modal')
 <div class="row mt-2">
     <div class="col">
         <div class="card">
@@ -100,10 +100,36 @@
                             <p class="lead"><strong>There are no Products ordered here.</strong></p>
                         </div>
                     </div>
-                @endif
-                
-                
-                    
+                @endif 
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                Payment Details
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <img src="{{  $order->format_payment_location }}" alt="No image uploaded">
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col text-right">
+                        
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#upload-payment-modal">
+                            Upload Payment
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

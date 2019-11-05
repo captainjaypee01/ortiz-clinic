@@ -108,6 +108,39 @@
         </div>
     </div>
 </div>
+
+@include('backend.transaction.order.includes.modals.approve-payment-modal')
+@include('backend.transaction.order.includes.modals.reject-payment-modal')
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                Payment
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <img src="{{  $order->format_payment_location }}" alt="No image uploaded">
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col"> 
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#reject-payment-modal">
+                            Reject  Payment
+                        </button>
+                    </div>
+                    <div class="col text-right">
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#approve-payment-modal">
+                            Approve Payment
+                        </button> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @else
 <div class="row">
     <div class="col text-center">

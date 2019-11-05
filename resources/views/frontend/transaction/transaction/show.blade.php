@@ -50,7 +50,11 @@
             
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col">
+                        
+                        <div class="col col-md-4">
+                            <a href="{{route('frontend.transaction.transaction.index')}}" class="btn btn-info btn-sm">Go Back</a>
+                        </div>
+                        <div class="col col-md-8">
                             <small class="float-right text-muted">
                                 <strong>@lang('labels.backend.access.users.tabs.content.overview.created_at'):</strong> {{ timezone()->convertToLocal($transaction->created_at) }} ({{ $transaction->created_at->diffForHumans() }}),
                                 <strong>@lang('labels.backend.access.users.tabs.content.overview.last_updated'):</strong> {{ timezone()->convertToLocal($transaction->updated_at) }} ({{ $transaction->updated_at->diffForHumans() }})

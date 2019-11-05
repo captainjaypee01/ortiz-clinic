@@ -78,7 +78,7 @@ class OrderController extends Controller
     }
     public function destroy(Order $order){
         $order->delete();
-        return redirect()->route('admin.transaction.order.index')->withFlashSuccess("Order Successfully Deleted");
+        return redirect()->back()->withFlashSuccess("Order Successfully Deleted");
     }
 
     public function save($form, $order){
@@ -114,7 +114,7 @@ class OrderController extends Controller
         
         Mail::to($user->email)->send(new OrderMail($user, $product, $order, request('quantity')));
         
-        return redirect()->route('admin.transaction.order.index')->withFlashSuccess("Order Successfully Saved. Please check your email for your notification.<br>REFERENCE NUMBER : <strong>" . $order->reference_number. "</strong>");
+        return redirect()->back()->withFlashSuccess("Order Successfully Saved. Please check your email for your notification.<br>REFERENCE NUMBER : <strong>" . $order->reference_number. "</strong>");
 
     }
 
@@ -132,7 +132,7 @@ class OrderController extends Controller
           
         Mail::to($user->email)->send(new OrderPaymentMail($user, $order)); 
 
-        return redirect()->route('admin.transaction.order.show', $order)->withFlashSuccess("Order Payment Status Approved and Email Successfully Sent");
+        return redirect()->back()->withFlashSuccess("Order Payment Status Approved and Email Successfully Sent");
     }
 
     public function reject(Order $order){
@@ -143,7 +143,7 @@ class OrderController extends Controller
          
         Mail::to($user->email)->send(new OrderPaymentMail($user, $order)); 
 
-        return redirect()->route('admin.transaction.order.show', $order)->withFlashSuccess("Order Payment Status Rejected and Email Successfully Sent");
+        return redirect()->back()->withFlashSuccess("Order Payment Status Rejected and Email Successfully Sent");
     }
 
 
