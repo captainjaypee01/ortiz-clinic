@@ -42,7 +42,7 @@
                             <th>Total Amount</th> 
                             <th>Total Services</th> 
                             <th>Total Products</th> 
-                            <th>Status</th>
+                            <th>Date Created</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -55,7 +55,7 @@
                                 <td>{{ $transaction->format_amount }}</td>
                                 <td>{{ $transaction->total_services > 0 ? $transaction->total_services : 0 }}</td> 
                                 <td>{{ $transaction->total_products > 0 ? $transaction->total_products : 0 }}</td>  
-                                <td>{!! $transaction->status_label !!}</td>
+                                <td>{!! $transaction->created_at !!}</td>
                                 <td>{!! $transaction->action_buttons !!}</td>
                             </tr>
                         @endforeach

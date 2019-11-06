@@ -120,8 +120,7 @@
                                 <div class="btn-group">
                                     <a href="{{ route('frontend.production.product.show', $product) }}" class="btn btn-sm btn-outline-secondary">View</a>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
+                                </div> 
                                 </div>
                             </div>
                         </div>
