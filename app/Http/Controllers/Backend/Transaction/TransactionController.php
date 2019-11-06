@@ -85,6 +85,7 @@ class TransactionController extends Controller
         $transaction->reference_number = $this->checkReference($this->generate_string(20));
         $transaction->user_id = request('user'); 
         $transaction->created_at = request('created_at');
+        $transaction->updated_at = request('created_at');
         $transaction->save();
 
         // Reservation
@@ -95,6 +96,7 @@ class TransactionController extends Controller
         $reservation->total_services = 1;
         $reservation->user_id = $transaction->user_id;
         $reservation->created_at = $transaction->created_at;
+        $reservation->updated_at = $transaction->created_at;
         $reservation->save();
         $reservation->services()->attach( $service, [
             "branch_id" => $branch->id,
@@ -114,6 +116,7 @@ class TransactionController extends Controller
         $order->total_orders = 1;
         $order->user_id = $transaction->user_id; 
         $order->created_at = $transaction->created_at;
+        $order->updated_at = $transaction->created_at;
         $order->save();
  
         $order->products()->attach( $product, ["quantity" => request('quantity')]);
