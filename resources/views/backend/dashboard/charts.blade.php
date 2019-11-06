@@ -50,7 +50,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    Total Monthly Orders
+                    Total Monthly Sales
                 </div>
                 <div class="card-body">
                         {!! $totalOrderChart->container() !!}
@@ -74,7 +74,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    Total Monthly Reservation per Services
+                    Total Monthly Reservation per Services Sales
                 </div>
                 <div class="card-body">
                         {!! $totalReservationChart->container() !!}

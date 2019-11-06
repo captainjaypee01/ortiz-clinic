@@ -96,7 +96,13 @@ trait ProductAttribute
      * @return string
      */
     public function getStatusLabelAttribute(){
-        return $this->status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Not Active</span>';
+        return $this->quantity > 0 ? '<span class="badge badge-success">Available</span>' : '<span class="badge badge-danger">Not Available</span>';
     }
     
+    /**
+     * @return string
+     */
+    // public function getStatusLabelAttribute(){
+    //     return $this->status == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Not Active</span>';
+    // }
 }

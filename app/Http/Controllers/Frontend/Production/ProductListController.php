@@ -77,7 +77,7 @@ class ProductListController extends Controller
         // dd($product->quantity < request('quantity'));
         if($product->quantity < request('quantity')) return redirect()->back()->withFlashWarning('Product quantity exceeds maximum!');
 
-        $product->quantity = request('quantity');
+        $product->qty = request('quantity');
         $product->total_amount = request('quantity') * $product->price;
         $cart = session()->get('cart'); 
         if(!$cart){ 
@@ -133,7 +133,7 @@ class ProductListController extends Controller
 
                 if($product->quantity < request('quantity')) return redirect()->back()->withFlashWarning('Product quantity exceeds maximum!');
                 
-                $cart["products"][request()->id]["quantity"] = request('quantity');  
+                $cart["products"][request()->id]["qty"] = request('quantity');  
                 $cart["products"][request()->id]["total_amount"] = $cart["products"][request()->id]["price"] * request('quantity');
                 session()->put('cart', $cart);
             }

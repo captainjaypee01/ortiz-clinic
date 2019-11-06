@@ -43,7 +43,7 @@ class SymptomListController extends Controller
     }
 
     public function all(){ 
-        $html = '<option value="" class="float-right" disabled>Search for symptoms</option>';
+        $html = '<option value="" class="float-right" selected disabled>Search for symptoms</option>';
         $success = false;
         $symptoms = null;
         $symptoms = Symptom::where('status', 1)->orderBy('name', 'asc')->get();

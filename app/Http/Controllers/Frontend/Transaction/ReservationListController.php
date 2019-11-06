@@ -91,8 +91,12 @@ class ReservationListController extends Controller
             // dd($order);
             $order->save();
 
-            foreach($cart["products"] as $product)
-                $order->products()->attach( $product, ["quantity" => $product->quantity]);
+            foreach($cart["products"] as $product){
+                $order->products()->attach( $product, ["quantity" => $product->qty]);
+                $prod = Product::find($product->id);
+                $prod->quantity -= $product->qty;
+                $prod->save();
+            }
 
 
             $transaction->total_products = count($cart["products"]);

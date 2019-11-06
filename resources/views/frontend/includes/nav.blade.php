@@ -10,7 +10,7 @@
             {{ html()->form('GET', route('frontend.record.symptom.index'))->class('form-inline input-group')->open() }}
         
                 <select name="symptoms[]" id="symptoms" class="selectpicker form-control" style="width:25%;"multiple="multiple"  data-live-search="true">      
-                    <option value="" class="float-right" selected disabled>Search for symptoms</option>
+                    <option value="" class="float-right" selected>Search for symptoms</option>
                 </select> 
                 <div class="input-group-prepend">
                     

@@ -150,7 +150,7 @@ class DashboardController extends Controller
         }
         $chart = new DashboardChart;
         $chart->labels($labels);    
-        $chart->dataset('Monthly Orders', 'bar', $dataset)->backgroundColor($colors);
+        $chart->dataset('Monthly Order Sales', 'bar', $dataset)->backgroundColor($colors);
         return $chart;
     }
 
@@ -202,7 +202,7 @@ class DashboardController extends Controller
         }
         $chart = new DashboardChart;
         $chart->labels($labels);    
-        $chart->dataset('Total Services Reserved per month', 'bar', $dataset)->backgroundColor($colors);
+        $chart->dataset('Total Services Reserved per month sales', 'bar', $dataset)->backgroundColor($colors);
         return $chart;
     }
 
