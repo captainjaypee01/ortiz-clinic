@@ -48,6 +48,15 @@
         {!! script(mix('js/vendor.js')) !!}
         {!! script(mix('js/frontend.js')) !!}
         <script>
+                function initMap() { 
+                    // Try HTML5 geolocation.
+                    if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition)  
+                    } else { 
+                        console.log("Geolocation is not supported by this browser.");
+                        alert("Geolocation is not supported by this browser.");
+                    }
+                } 
                 var x = document.getElementById("demo");
                 function getLocation() {
                     console.log(navigator.geolocation);
@@ -80,6 +89,8 @@
                 }
                 getLocation();
         </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNsrC4lgCajNPslsFF7c68Y87sn00i3zQ&libraries=places,geometry&callback=initMap"
+        async defer></script>
         @stack('after-scripts')
 
         @include('includes.partials.ga')
