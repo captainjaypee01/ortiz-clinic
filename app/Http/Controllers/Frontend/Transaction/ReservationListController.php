@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller; 
 use App\Mail\Frontend\Transaction\OrderMail;
 use App\Mail\Frontend\Transaction\ReservationMail;
+use App\Models\Production\Product;
 use App\Models\Transaction\Order;
 use App\Models\Transaction\Reservation;
 use App\Models\Transaction\Transaction;
