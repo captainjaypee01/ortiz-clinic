@@ -81,8 +81,7 @@ trait TransactionAttribute
     {
 
         return '<div class="btn-group btn-group-sm" role="group" aria-label="'.__('labels.backend.access.users.user_actions').'">
-			  '.$this->show_button.' 
-			  '.$this->delete_button.'
+			  '.$this->show_button.'  
 			  '.$this->status_button.'
 			</div>';
     }
