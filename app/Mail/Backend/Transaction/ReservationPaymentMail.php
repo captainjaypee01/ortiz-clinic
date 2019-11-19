@@ -22,10 +22,9 @@ class ReservationPaymentMail extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user, Service $service, Reservation $reservation)
+    public function __construct(User $user, Reservation $reservation)
     {
-        $this->user = $user;
-        $this->service = $service; 
+        $this->user = $user; 
         $this->reservation = $reservation;
     }
 
@@ -42,7 +41,6 @@ class ReservationPaymentMail extends Mailable
             ->subject("Welcome to Ortiz Skin Clinic",  ['app_name' => app_name()])
             ->with([
                 "user" => $this->user,
-                "service" => $this->service,
                 "reservation" => $this->reservation,
             ]);
     }

@@ -33,7 +33,7 @@ trait ReservationAttribute
     }
     
     public function getFormatPaymentLocationAttribute(){
-        return $this->image_location ? url('uploads') . '/' . $this->image_location : asset('img/frontend/ortiz-clinic-logo.png');
+        return $this->payment_location ? url('uploads') . '/' . $this->payment_location : asset('img/frontend/ortiz-clinic-logo.png');
         return $this->payment_location ? 'https://storage.cloud.google.com/ortiz_clinic/' . $this->payment_location : asset('img/frontend/ortiz-clinic-logo.png');
     }
 

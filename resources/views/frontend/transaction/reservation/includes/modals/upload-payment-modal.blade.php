@@ -1,6 +1,6 @@
 
 
-<div class="modal fade login-modal" id="upload-payment-modal" tabindex="-1" role="dialog" aria-labelledby="upload-payment-modal" aria-hidden="true">
+<div class="modal fade login-modal" id="upload-res-payment-modal" tabindex="-1" role="dialog" aria-labelledby="upload-res-payment-modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">

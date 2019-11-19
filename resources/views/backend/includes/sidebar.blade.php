@@ -85,7 +85,7 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link {{
                     active_class(Active::checkUriPattern('admin/transaction/reservation'))
                 }}" href="{{ route('admin.transaction.reservation.index') }}">
@@ -101,7 +101,7 @@
                     <i class="nav-icon fas fa-shopping-cart"></i>
                     Orders
                 </a>
-            </li>
+            </li> --}}
 
 
             <li class="nav-title">

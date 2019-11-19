@@ -129,23 +129,19 @@ class ReservationController extends Controller
         return redirect()->route('admin.transaction.reservation.index')->withFlashSuccess("Reservation Status Saved");
     }
 
-    public function approve(Reservation $reservation){
-        request()->validate([ 
-            'employee' => 'required', 
-            'room' => 'required',
-        ]);
+    public function approve(Reservation $reservation){ 
 
         $user = User::find($reservation->user_id);
         
         $reservation->payment_status = 1;
-        $reservation->room_id = request('room');
-        $reservation->employee_id = request('employee');
+        // $reservation->room_id = request('room');
+        // $reservation->employee_id = request('employee');
         $reservation->save(); 
 
-        $service = Service::find($reservation->service_id);
-        Mail::to($user->email)->send(new ReservationPaymentMail($user, $service, $reservation)); 
+        // $service = Service::find($reservation->service_id);
+        Mail::to($user->email)->send(new ReservationPaymentMail($user, $reservation)); 
 
-        return redirect()->route('admin.transaction.reservation.show', $reservation)->withFlashSuccess("Reservation Payment Status Saved and Email Successfully Sent");
+        return redirect()->back()->withFlashSuccess("Reservation Payment Status Saved and Email Successfully Sent");
     }
 
     public function reject(Reservation $reservation){
@@ -158,7 +154,7 @@ class ReservationController extends Controller
 
         Mail::to($user->email)->send(new ReservationPaymentMail($user, $service, $reservation)); 
 
-        return redirect()->route('admin.transaction.reservation.show', $reservation)->withFlashSuccess("Reservation Payment Status Rejected and Email Successfully Sent");
+        return redirect()->back()->withFlashSuccess("Reservation Payment Status Rejected and Email Successfully Sent");
     }
 
     public function assignEmployee(Reservation $reservation){

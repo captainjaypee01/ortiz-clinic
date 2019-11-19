@@ -41,6 +41,8 @@
             </div>
         </div><!--table-responsive-->
     </div>
+    
+    @include('frontend.transaction.reservation.includes.modals.upload-payment-modal')
     @if(count($reservation->services) > 0)
     <div class="row mt-2"> 
         <div class="col"> 
@@ -79,6 +81,32 @@
     </div><!--table-responsive--> 
     @endif
  
+    <div class="row mt-2">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Payment Details
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <img src="{{  $reservation->format_payment_location }}" alt="No image uploaded">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col text-right">
+                            
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#upload-res-payment-modal">
+                                Upload Payment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
         
     @push('after-scripts')
 
