@@ -108,9 +108,9 @@
                                     </td>
                                     <td data-th="Price" data-price="{{ $product->price }}">{{ $product->format_price }}</td>
                                     <td data-th="Quantity">
-                                        <input type="number" value="{{ $product->quantity }}" class="form-control quantity text-center">
+                                        <input type="number" value="{{ $product->qty }}" class="form-control quantity text-center">
                                     </td>
-                                    <td data-th="Subtotal" class="text-center">{{ number_format($product->price * $product->quantity, 2, ".", ",")  }}</td>
+                                    <td data-th="Subtotal" class="text-center">{{ number_format($product->price * $product->qty, 2, ".", ",")  }}</td>
                                     <td class="actions" data-th="">
                                         <button class="btn btn-info btn-sm btn-update" data-id="{{ $product->id }}"><i class="fas fa-sync"></i></button>
                                         <button class="btn btn-danger btn-sm btn-remove" data-type="products" data-id="{{ $product->id }}"><i class="fas fa-trash"></i></button>							
