@@ -152,7 +152,7 @@ class ReservationController extends Controller
          
         $service = Service::find($reservation->service_id);
 
-        Mail::to($user->email)->send(new ReservationPaymentMail($user, $service, $reservation)); 
+        Mail::to($user->email)->send(new ReservationPaymentMail($user, $reservation)); 
 
         return redirect()->back()->withFlashSuccess("Reservation Payment Status Rejected and Email Successfully Sent");
     }
@@ -183,7 +183,7 @@ class ReservationController extends Controller
             $reservation->payment_status = 1;
             $reservation->save(); 
             $reservationService->pivot->save(); 
-            Mail::to($user->email)->send(new ReservationPaymentMail($user, $service, $reservation)); 
+            Mail::to($user->email)->send(new ReservationPaymentMail($user, $reservation)); 
     
             return redirect()->back()->withFlashSuccess("Successfully Assigned and Email Successfully Sent");
         
