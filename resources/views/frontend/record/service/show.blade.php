@@ -36,8 +36,15 @@
                             </div> 
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group col">
+                    <div class="row" id="section-list-time" style="display:none;">
+                        <div class="col table-responsive">
+                            <table class="table" id="show-reservation">
+
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row" style="display:none;" id="section-reservation-time">
+                        <div class="form-group col" >
                             {{ html()->label("Reservation Time")->for('reservation_time') }}
                             {{ html()->time('reservation_time')
                                     ->class('form-control')   
@@ -49,7 +56,7 @@
                             <a href="{{ route('frontend.record.branch.index') }}" class="btn btn-info btn-sm">Go Back</a>
                         </div> 
                         <div class="col text-right">
-                            <button type="submit" class="btn btn-success btn-sm " >
+                            <button type="submit" id="btn-submit" class="btn btn-success btn-sm " disabled>
                                 Submit
                             </button>
                         </div> 
@@ -66,25 +73,29 @@
 @push('after-styles')
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"> --}}
 
 @endpush
 @push('after-scripts')
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script> --}}
 
 <script>
+    $("#section-list-time").hide();
     Date.prototype.addDays = function(days) {
         this.setDate(this.getDate() + parseInt(days));
         return this;
     };
-    var minimumDate = new Date(new Date().getDate() + 2);
-    $('#reservation_date').datetimepicker( {
-        minDate : new Date().addDays(1),
-        format:'Y-M-DD'
-    });
+    var minimumDate = new Date().addDays(1);
+    var formattedDate = minimumDate.getFullYear() + "-" + (minimumDate.getMonth()+1) + "-" + minimumDate.getDate() ;
+    console.log(formattedDate);
+    $("#reservation_date").attr("min", formattedDate);
+    // $('#reservation_date').datetimepicker( {
+    //     minDate : new Date().addDays(1),
+    //     format:'Y-M-DD'
+    // });
 
     $('#branch').selectpicker();
     $("#btn-show-reservation").click(function(e){
@@ -95,6 +106,53 @@
     $("#btn-show-service").click(function(e){
         $("#section-reservation").hide();
         $("#section-show").show();
+    }); 
+    $("#reservation_date").change(function (e) {
+        var resDate = $("#reservation_date").val();
+        getListTime(resDate); 
     });
+    $("#reservation_time").change(function (e) {
+        console.log($("#reservation_time").val());
+        var resDate = $("#reservation_date").val();
+        var resTime = $("#reservation_time").val();
+        getCheckTime(resDate, resTime); 
+    });
+
+    function getListTime(reservationDate){
+        $.ajax({
+            url: '{{ route("frontend.record.service.list.date") }}' + '?reservation_date=' + reservationDate + '&branch={{ $branch->id }}',
+            method: 'get',
+            success: function(response){
+                // console.log(response);
+                $("#show-reservation").html(response.output);
+                if(response.reservations.length > 0)
+                    $("#section-list-time").show();
+                else
+                    $("#section-list-time").hide();
+
+                $("#section-reservation-time").show();
+            },
+            error: function(response){
+                console.log(response);
+            }
+        })
+    }
+
+    function getCheckTime(reservationDate, reservationTime){
+        $.ajax({
+            url: '{{ route("frontend.record.service.check.time") }}' + '?reservation_date=' + reservationDate + '&reservation_time=' + reservationTime + '&service={{ $service->id }}'+ '&branch={{ $branch->id }}',
+            method: 'get',
+            success: function(response){
+                console.log(response);
+                if(response.exist)
+                    $("#btn-submit").attr('disabled', true);
+                else
+                    $("#btn-submit").attr('disabled', false);
+            },
+            error: function(response){
+                console.log(response);
+            }
+        })
+    }
 </script>
 @endpush

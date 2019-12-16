@@ -9,6 +9,7 @@ use App\Models\Record\Branch;
 use App\Models\Record\Room;
 use App\Models\Record\Service;
 use App\Models\Transaction\Reservation;
+use App\Models\Transaction\ReservationService;
 use Carbon\Carbon;
 use Log;
 use Mail;
@@ -193,6 +194,60 @@ class ServiceListController extends Controller
             session()->put('cart', $cart);
             session()->flash('success', 'Service removed successfully');
         }
+    }
+
+    public function showListTime(){
+        $reservationDate = request('reservation_date');
+
+        $reservations = ReservationService::where('reservation_date', $reservationDate)->where('branch_id', request('branch'))->get();
+
+        $output = '<tr>'.
+                    '<th>Reserved Time</th>'.
+                    '<th>Duration</th>'.
+                '</tr>';
+        if(count($reservations) > 0){
+            foreach($reservations as $r){
+                $output .= '<tr>' .
+                            '<td>' . $r->reservation_time . '</td>' .
+                            '<td>' . $r->duration . '</td>' .  
+                        '</tr>';
+            }
+        }
+        return response()->json([
+            'reservations' => $reservations,
+            'output' => $output,
+            'branch' => request('branch'),
+        ]);
+    }
+
+    public function checkListTime(){
+        $reservationDate = request('reservation_date');
+        $reservationTime = request('reservation_time');
+        $service = Service::find(request('service')); 
+
+        $checkExactReservation = ReservationService::where('reservation_date', $reservationDate)->where('reservation_time', $reservationTime)->where('branch_id', request('branch'))->get();
+
+        $exist = false;
+        if(count($checkExactReservation) > 0)
+            $exist = true;
+
+            
+        $ctr = 0;
+        $checkListReservation = ReservationService::where('reservation_date', $reservationDate)->where('branch_id', request('branch'))->get();
+        foreach($checkListReservation as $res){ 
+            $time = Carbon::parse($res->reservation_time);
+            $reserveTime = Carbon::parse(request("reservation_time"));
+            $time->addMinutes($res->duration);
+            $reserveTime->addMinutes($service->duration);
+            if($time->gt($reserveTime) && $reserveTime->gt(Carbon::parse($res->reservation_time)))
+                $exist = true;
+        }
+        
+        return response()->json([
+            'exist' => $exist,
+        ]);
+        return $exist;
+        
     }
 
 

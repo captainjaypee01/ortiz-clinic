@@ -33,6 +33,8 @@ Route::group([
     ], function () {
     
         Route::get('/', [ServiceListController::class, 'index'])->name('index');  
+        Route::get('/list/date', [ServiceListController::class, 'showListTime'])->name('list.date');
+        Route::get('/check/time', [ServiceListController::class, 'checkListTime'])->name('check.time');
         Route::delete('/remove/cart', [ServiceListController::class, 'removeFromCart'])->name('cart.remove'); 
 
         Route::group(['prefix' => '{service}', 'middleware' => ['auth', 'password_expires']], function () {
