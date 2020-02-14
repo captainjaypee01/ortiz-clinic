@@ -11,6 +11,7 @@ use App\Models\Record\Service;
 use App\Models\Transaction\Reservation;
 use App\Models\Transaction\ReservationService;
 use Carbon\Carbon;
+use DB;
 use Log;
 use Mail;
 
@@ -134,16 +135,18 @@ class ServiceListController extends Controller
         $cart = session()->get('cart'); 
 
         $reservations = Reservation::where("status", 1)->whereDate("reservation_date", request('reservation_date'))->get();
-        $rooms = Room::where("status", 1)->get(); 
+        $rooms = Room::where('branch_id', $branch->id)->where("status", 1)->get(); 
         $ctr = 0;
         if(count($reservations) > 0){
-            foreach($reservations as $res){ 
-                $time = Carbon::parse($res->reservation_time);
-                $reserveTime = Carbon::parse(request("reservation_time"));
-                $time->addMinutes($res->duration);
-                $reserveTime->addMinutes($service->duration);
-                if($time->gt($reserveTime) && $reserveTime->gt(Carbon::parse($res->reservation_time)))
-                    $ctr++;
+            foreach($reservations as $reservation){ 
+                foreach($reservation->services as $reservationService){
+                    $time = Carbon::parse($reservationService->reservation_time);
+                    $reserveTime = Carbon::parse(request("reservation_time"));
+                    $time->addMinutes($reservationService->duration);
+                    $reserveTime->addMinutes($service->duration);
+                    if($time->gt($reserveTime) && $reserveTime->gt(Carbon::parse($reservationService->reservation_time)))
+                        $ctr++;
+                }
             }
         }
         if(count($rooms) <= $ctr)
@@ -226,20 +229,31 @@ class ServiceListController extends Controller
         $service = Service::find(request('service')); 
 
         $checkExactReservation = ReservationService::where('reservation_date', $reservationDate)->where('reservation_time', $reservationTime)->where('branch_id', request('branch'))->get();
-
+        $branchRoomSize = Room::where('branch_id', request('branch'))->count();
         $exist = false;
-        if(count($checkExactReservation) > 0)
+        if(count($checkExactReservation) > 0 && $branchRoomSize <= count($checkExactReservation))
             $exist = true;
 
             
         $ctr = 0;
         $checkListReservation = ReservationService::where('reservation_date', $reservationDate)->where('branch_id', request('branch'))->get();
         foreach($checkListReservation as $res){ 
+
+
             $time = Carbon::parse($res->reservation_time);
             $reserveTime = Carbon::parse(request("reservation_time"));
-            $time->addMinutes($res->duration);
-            $reserveTime->addMinutes($service->duration);
-            if($time->gt($reserveTime) && $reserveTime->gt(Carbon::parse($res->reservation_time)))
+            $addedTime = Carbon::parse($res->reservation_time)->addMinutes($res->duration);
+            $addedReserveTime = Carbon::parse(request("reservation_time"))->addMinutes($service->duration);
+            Log::info($addedTime->format('H:i:s'));
+            $reservationServiceRoom = ReservationService::whereDate('reservation_date', $reservationDate)
+                                                    ->where('branch_id', request('branch'))
+                                                    ->whereNotNull('room_id')
+                                                    ->whereBetween('reservation_time', [$reserveTime->format('H:i:s'), $addedTime->format('H:i:s')])
+                                                    // ->where(DB::raw('reservation_time BETWEEN "' . $res->reservation_time . '" and "' . $addedTime->format('H:i:s').'" '))
+                                                    ->get();
+            Log::info($reservationServiceRoom);
+            // Log::info($reserveTime);
+            if( ($addedTime->gt($addedReserveTime) && $addedReserveTime->gt(Carbon::parse($res->reservation_time))) && $branchRoomSize <= count($reservationServiceRoom))
                 $exist = true;
         }
         

@@ -4,6 +4,7 @@
 use Faker\Generator;
 use Ramsey\Uuid\Uuid;
 use App\Models\Auth\User;
+use App\Models\Transaction\Transaction;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +61,13 @@ $factory->state(User::class, 'softDeleted', function () {
         'deleted_at' => now(),
     ];
 });
+
+$factory->state(User::class, 'create_transaction', [])
+        ->afterCreatingState(User::class, 'create_transaction', function ($user, $faker) { 
+            $user->assignRole('user');
+            
+        factory(Transaction::class, rand(1,30))->state('with_reservation_orders')->create([
+            'user_id' => $user->id,
+        ]);
+});
+

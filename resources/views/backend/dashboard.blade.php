@@ -60,5 +60,6 @@
 {!! $totalReservationChart->script() !!}
 {!! $totalFrequentProductChart->script() !!}
 {!! $totalFrequentServiceChart->script() !!}
+{!! $transactionChart->script() !!}
 
 @endpush

@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Collection;
 use App\Charts\DashboardChart;
 use App\Models\Transaction\Order;
 use App\Models\Transaction\Reservation;
+use App\Models\Transaction\Transaction;
+use Carbon\Carbon;
 use DB;
 
 /**
@@ -43,11 +45,53 @@ class DashboardController extends Controller
                     "totalReservationChart" => $this->totalReservationChart(),
                     "totalFrequentProductChart" => $this->totalFrequentProductChart(),
                     "totalFrequentServiceChart" => $this->totalFrequentServiceChart(),
+                    'transactionChart' => $this->monthlyTransactionChart(),
                 ])
                 ->withUsers($users)
                 ->withProducts($products)
                 ->withServices($services)
                 ->withBranches($branches);
+    }
+
+    public function monthlyTransactionChart(){
+        $month = request('month') ? request('month') : Carbon::now()->month;
+        $year = request('year') ? request('year') : Carbon::now()->year;
+        $transactionChart = new DashboardChart();
+        $transactionOrders = Transaction::selectRaw('DATE_FORMAT(created_at, "%Y-%m-%d") as entry_date, sum(total_products) as total')
+                                            ->whereMonth('created_at', $month)
+                                            ->whereYear('created_at', $year)->where('status', 1)
+                                            ->whereExists(function ($query) { $query->from('orders')->where('orders.payment_status', 1)->whereRaw('transactions.id = orders.transaction_id');  })
+                                            ->groupBy('entry_date')->get(); 
+                                            
+        $transactionReservations = Transaction::selectRaw('DATE_FORMAT(created_at, "%Y-%m-%d") as entry_date, sum(total_services) as total')
+                                            ->whereMonth('created_at', $month)
+                                            ->whereYear('created_at', $year)->where('status', 1)
+                                            ->whereExists(function ($query) { $query->from('reservations')->where('reservations.payment_status', 1)->whereRaw('transactions.id = reservations.transaction_id');  })
+                                            ->groupBy('entry_date')->get(); 
+
+        
+        $transactions = Transaction::selectRaw('DATE_FORMAT(created_at, "%Y-%m-%d") as entry_date, count(status) as total')->whereMonth('created_at', $month)->whereYear('created_at', $year)->groupBy('entry_date')->get();
+        $monthYear = Carbon::createFromDate($year, $month, 1);
+        $daysThisMonth = []; // set temp vars
+        $orders_data = [];
+        $reservations_data = [];
+        $time = [];
+        $currentDate = $monthYear->toDateString();
+        
+        for ($i = 1; $i <= $monthYear->daysInMonth; $i++) {
+            array_push($orders_data, ($offset = $transactionOrders->firstWhere('entry_date', $currentDate)) ? $offset->total : null);
+            array_push($reservations_data, ($offset = $transactionReservations->firstWhere('entry_date', $currentDate)) ? $offset->total : null);
+            array_push($time, ($offset = $transactions->firstWhere('entry_date', $currentDate)) ? $offset->total : null);
+            array_push($daysThisMonth, $currentDate);
+            $currentDate = $i < $monthYear->daysInMonth ? $monthYear->addDay()->toDateString() : $monthYear->toDateString();
+        };
+        
+        $transactionChart->labels($daysThisMonth);
+        $transactionChart->dataset('Orders', 'bar', $orders_data)->color('#63C2DE')->backgroundColor('#63C2DE');
+        $transactionChart->dataset('Reservations', 'bar', $reservations_data)->color('#CD201F')->backgroundColor('#CD201F');
+
+        return $transactionChart;
+
     }
 
     public function userChart(){
